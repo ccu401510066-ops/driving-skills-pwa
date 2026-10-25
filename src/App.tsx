@@ -3,11 +3,28 @@ import { tricks, tricksById, type Step, type Trick, type Variant } from './data/
 
 type Route =
   | { view: 'home' }
-  | { view: 'pick'; id: string }
-  | { view: 'full'; id: string; vid?: string }
+  | { view: 'pick'; id: string; side?: string }
+  | { view: 'full'; id: string; side?: string; method?: string }
 
-function variantOf(trick: Trick | undefined, vid?: string): Variant | undefined {
-  return trick?.variants?.find((v) => v.id === vid)
+const isGroup = (v: Variant) => (v.variants?.length ?? 0) > 0
+
+function sideOf(trick: Trick | undefined, sideId?: string): Variant | undefined {
+  return trick?.variants?.find((v) => v.id === sideId && isGroup(v))
+}
+
+function methodOf(trick: Trick | undefined, sideId?: string, methodId?: string): Variant | undefined {
+  if (!trick?.variants) return undefined
+  const side = sideOf(trick, sideId)
+  if (side) return side.variants?.find((m) => m.id === methodId)
+  return trick.variants.find((v) => v.id === sideId && !isGroup(v))
+}
+
+const twoLevels = (trick: Trick) => (trick.variants ?? []).some(isGroup)
+
+function methodPath(trick: Trick, side: Variant | undefined, method: Variant) {
+  return side
+    ? `#/full/${trick.id}/${side.id}/${method.id}`
+    : `#/full/${trick.id}/${method.id}`
 }
 
 /** 動作列：方向盤 → 動作 → 行進方向 → 行進補充 */
@@ -22,12 +39,18 @@ function stepAction(s: Step): string {
 
 function parseHash(): Route {
   const clean = location.hash.replace(/^#\/?/, '')
-  const [view, id, vid] = clean.split('/')
+  const [view, id, a, b] = clean.split('/')
   const trick = id ? tricksById[id] : undefined
-  if (view === 'pick' && trick?.variants) return { view, id }
+  if (view === 'pick' && trick?.variants) {
+    return { view: 'pick', id, side: sideOf(trick, a)?.id }
+  }
   // 舊的逐步分頁網址一律導到同一頁
   if ((view === 'full' || view === 'brief') && trick) {
-    return { view: 'full', id, vid: variantOf(trick, vid)?.id }
+    if (!trick.variants) return { view: 'full', id }
+    const side = sideOf(trick, a)
+    const method = methodOf(trick, a, b)
+    if (method) return { view: 'full', id, side: side?.id, method: method.id }
+    return { view: 'pick', id, side: side?.id }
   }
   return { view: 'home' }
 }
@@ -96,7 +119,7 @@ function Home({ theme, onToggle }: { theme: 'dark' | 'light'; onToggle: () => vo
               <span className="card-body">
                 <span className="card-name">
                   {t.name}
-                  {t.variants && <span className="card-sub">4 種打法</span>}
+                  {t.badge && <span className="card-sub">{t.badge}</span>}
                 </span>
                 <span className="card-one">{t.oneLiner}</span>
               </span>
@@ -121,79 +144,90 @@ function Home({ theme, onToggle }: { theme: 'dark' | 'light'; onToggle: () => vo
   )
 }
 
-function Pick({ trick, theme, onToggle }: { trick: Trick; theme: 'dark' | 'light'; onToggle: () => void }) {
-  const variants = trick.variants ?? []
+function Pick({
+  trick,
+  sideId,
+  theme,
+  onToggle
+}: {
+  trick: Trick
+  sideId?: string
+  theme: 'dark' | 'light'
+  onToggle: () => void
+}) {
+  const all = trick.variants ?? []
+  const grouped = twoLevels(trick)
+  const side = sideId ? all.find((s) => s.id === sideId) : undefined
+  const items = grouped ? (side?.variants ?? []) : all
+  const compare = grouped ? side?.compare : trick.compare
+  const listTitle = grouped && !side ? '選車位在哪一側' : '選一種打法'
+  const backTarget = grouped && side ? `#/pick/${trick.id}` : '#/'
+
   return (
     <div className="full">
       <header className="full-head">
-        <button className="icon-btn" onClick={() => go('#/')} aria-label="回列表">
+        <button className="icon-btn" onClick={() => go(backTarget)} aria-label="回上一頁">
           ‹
         </button>
         <div className="brief-title">
           <span className="no-small">{trick.no}</span>
-          <span>{trick.name}</span>
+          <span>{grouped && side ? `${trick.name}・${side.name}` : trick.name}</span>
         </div>
         <ThemeToggle theme={theme} onToggle={onToggle} />
       </header>
 
       <main className="full-body">
-        <p className="full-mantra">{trick.oneLiner}</p>
-        <p className="full-situation">{trick.situation}</p>
+        <p className="full-mantra">{side ? side.name : trick.oneLiner}</p>
+        <p className="full-situation">{side ? side.when : trick.situation}</p>
+
+        {side?.start && <p className="variant-start start-line">起點：{side.start}</p>}
 
         <section className="block">
-          <h3>選一種打法</h3>
+          <h3>{listTitle}</h3>
           <div className="variant-list">
-            {variants.map((v, i) => (
+            {items.map((v, i) => (
               <button
                 className="variant-card"
                 key={v.id}
-                onClick={() => go(`#/full/${trick.id}/${v.id}`)}
+                onClick={() =>
+                  go(grouped && !side ? `#/pick/${trick.id}/${v.id}` : methodPath(trick, side, v))
+                }
               >
                 <span className="variant-top">
                   <span className="variant-no">{String(i + 1).padStart(2, '0')}</span>
                   <span className="variant-name">{v.name}</span>
-                  <span className="variant-sway">{v.sway}</span>
+                  {v.sway && <span className="variant-sway">{v.sway}</span>}
                 </span>
                 <span className="variant-when">{v.when}</span>
-                <span className="variant-start">起點：{v.start}</span>
+                {v.start && <span className="variant-start">起點：{v.start}</span>}
+                {grouped && !side && (
+                  <span className="variant-start more">{(v.variants ?? []).length} 種打法 ›</span>
+                )}
               </button>
             ))}
           </div>
         </section>
 
-        <section className="block">
-          <h3>四種打法差在哪</h3>
-          <div className="compare">
-            <div className="compare-row compare-head">
-              <span>打法</span>
-              <span>起點對位</span>
-              <span>第一把</span>
+        {compare && (
+          <section className="block">
+            <h3>打法比較</h3>
+            <div className="compare">
+              <div className="compare-row compare-head">
+                {compare.head.map((h) => (
+                  <span key={h}>{h}</span>
+                ))}
+              </div>
+              {compare.rows.map((row) => (
+                <div className="compare-row" key={row[0]}>
+                  {row.map((cell, i) => (
+                    <span key={i}>{cell}</span>
+                  ))}
+                </div>
+              ))}
             </div>
-            <div className="compare-row">
-              <span>半圈</span>
-              <span>B 柱對前車車頭</span>
-              <span>右半圈</span>
-            </div>
-            <div className="compare-row">
-              <span>一圈</span>
-              <span>車尾對前車車尾</span>
-              <span>右一圈</span>
-            </div>
-            <div className="compare-row">
-              <span>打滿</span>
-              <span>車尾對前車車尾</span>
-              <span>右打滿</span>
-            </div>
-            <div className="compare-row">
-              <span>車頭先進</span>
-              <span>B 柱對後車車頭</span>
-              <span>右打滿駛入</span>
-            </div>
-          </div>
-          <p className="compare-note">
-            共同收尾：看到後車完整車頭就回正直倒；右前門把手壓到路邊就左打滿，車身平行後微調。
-          </p>
-        </section>
+            {compare.note && <p className="compare-note">{compare.note}</p>}
+          </section>
+        )}
       </main>
     </div>
   )
@@ -202,18 +236,24 @@ function Pick({ trick, theme, onToggle }: { trick: Trick; theme: 'dark' | 'light
 function Sheet({
   trick,
   variant,
+  side,
   theme,
   onToggle
 }: {
   trick: Trick
   variant?: Variant
+  side?: Variant
   theme: 'dark' | 'light'
   onToggle: () => void
 }) {
   const refs = variant?.refs ?? trick.refs
   const steps = variant?.steps ?? trick.steps
   const overview = variant?.overview
-  const backTarget = variant ? `#/pick/${trick.id}` : '#/'
+  const backTarget = side
+    ? `#/pick/${trick.id}/${side.id}`
+    : trick.variants
+      ? `#/pick/${trick.id}`
+      : '#/'
 
   return (
     <div className="full">
@@ -229,17 +269,17 @@ function Sheet({
       </header>
 
       <main className="full-body">
-        {variant ? (
-          <>
-            <p className="full-mantra">{variant.sway}</p>
-            <p className="full-situation">{variant.when}</p>
-          </>
-        ) : (
-          <>
-            <p className="full-mantra">{trick.oneLiner}</p>
-            <p className="full-situation">{trick.situation}</p>
-          </>
-        )}
+        <p className="full-mantra">
+          {variant
+            ? side
+              ? variant.name
+              : (variant.sway ?? trick.oneLiner)
+            : trick.oneLiner}
+        </p>
+        <p className="full-situation">
+          {side && <span className="side-chip">{side.name}</span>}
+          {variant ? variant.when : trick.situation}
+        </p>
 
         {overview && (
           <figure className="overview">
@@ -294,7 +334,7 @@ function Sheet({
         )}
 
         {variant && (
-          <button className="wide-link top-gap" onClick={() => go(`#/pick/${trick.id}`)}>
+          <button className="wide-link top-gap" onClick={() => go(backTarget)}>
             換一種打法 ›
           </button>
         )}
@@ -318,16 +358,31 @@ export default function App() {
   }, [])
 
   if (route.view === 'pick') {
-    return <Pick trick={tricksById[route.id]} theme={theme} onToggle={toggle} />
+    return (
+      <Pick
+        trick={tricksById[route.id]}
+        sideId={route.side}
+        theme={theme}
+        onToggle={toggle}
+      />
+    )
   }
   if (route.view === 'full') {
     const trick = tricksById[route.id]
-    const variant = variantOf(trick, route.vid)
     // 有多種打法的招式，沒指定打法就先去選
-    if (trick.variants && !variant) {
-      return <Pick trick={trick} theme={theme} onToggle={toggle} />
+    if (trick.variants) {
+      const side = sideOf(trick, route.side)
+      const method = methodOf(trick, route.side, route.method)
+      if (!method) {
+        return (
+          <Pick trick={trick} sideId={side?.id} theme={theme} onToggle={toggle} />
+        )
+      }
+      return (
+        <Sheet trick={trick} variant={method} side={side} theme={theme} onToggle={toggle} />
+      )
     }
-    return <Sheet trick={trick} variant={variant} theme={theme} onToggle={toggle} />
+    return <Sheet trick={trick} theme={theme} onToggle={toggle} />
   }
   return <Home theme={theme} onToggle={toggle} />
 }

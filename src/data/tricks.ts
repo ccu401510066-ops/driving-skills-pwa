@@ -20,23 +20,33 @@ export type Step = {
   image?: string
 }
 
+export type Compare = {
+  head: string[]
+  rows: string[][]
+  note?: string
+}
+
 export type Variant = {
   id: string
   name: string
-  /** 外擺幅度 */
-  sway: string
+  /** 外擺幅度／一句差異 */
+  sway?: string
   /** 什麼情況用這個打法 */
   when: string
   /** 起始對位一句話 */
-  start: string
+  start?: string
   /** 總示意圖（俯視），有圖才顯示 */
   overview?: string
   /** 圖說，說明圖上各段是什麼 */
   overviewNote?: string
-  refs: Ref[]
-  steps: Step[]
-  rescue: string[]
-  limits: string[]
+  refs?: Ref[]
+  steps?: Step[]
+  rescue?: string[]
+  limits?: string[]
+  /** 打法比較表 */
+  compare?: Compare
+  /** 子打法：有這一層就是「先選庫位，再選打法」 */
+  variants?: Variant[]
 }
 
 export type Trick = {
@@ -44,6 +54,8 @@ export type Trick = {
   no: string
   name: string
   tag: string
+  /** 首頁卡片右上角的小標，例如「4 種打法」 */
+  badge?: string
   /** 一句心法：上車前只看這句 */
   oneLiner: string
   /** 什麼時候用 */
@@ -55,9 +67,24 @@ export type Trick = {
   rescue: string[]
   /** 適用與不適用 */
   limits: string[]
+  /** 打法比較表 */
+  compare?: Compare
   /** 同一招的多種打法（有的話，點進來先選） */
   variants?: Variant[]
 }
+
+const PARK_RESCUE = [
+  '轉太早（車尾偏外側、車頭會掃到旁邊的車）→ 往前開回原位重來，不要原地扭方向盤。',
+  '轉太晚（車尾偏內側）→ 先倒到底、回正，再小幅修正。',
+  '車位太窄（比車寬多不到 60 cm）→ 換車位，硬停最容易刮傷。',
+  '有倒車顯影也要看兩側後照鏡，廣角畫面會把距離壓縮。'
+]
+
+const PARK_LIMITS = [
+  '車位長度至少車長 + 1 m 才好停。',
+  '另一側車位把左右全部對調（打方向、看後照鏡都反過來）。',
+  '斜線車位、機械車位的角度不同，不適用這套步驟。'
+]
 
 export const tricks: Trick[] = [
   {
@@ -111,50 +138,286 @@ export const tricks: Trick[] = [
     no: '02',
     name: '倒車入庫',
     tag: '停車',
+    badge: '左右各 3 種',
     oneLiner: '慢，比準重要；寧可重來，不要硬修。',
-    situation: '平面停車場、地下停車場的垂直車位（車位在右手邊）。',
-    refs: [
-      { k: '起點', v: '車身與車位線平行，距旁車 50–80 cm' },
-      { k: '打方向點', v: '後照鏡下緣切到車位前緣線' },
-      { k: '回正點', v: '後照鏡裡，車身與車位線平行' }
-    ],
-    steps: [
+    situation: '平面停車場、地下停車場的垂直車位。先選車位在左邊還是右邊，再選打法。',
+    refs: [],
+    steps: [],
+    rescue: PARK_RESCUE,
+    limits: PARK_LIMITS,
+    variants: [
       {
-        judge: '車身　⟷　旁車平行，距 50–80 cm',
-        move: 'fwd',
-        note: '開過車位'
+        id: 'left',
+        name: '左側庫位',
+        when: '車位在駕駛座這一側，倒車時往左打。',
+        start: '車身與左側旁車平行，車位在左邊',
+        compare: {
+          head: ['打法', '打方向時機', '適合'],
+          rows: [
+            ['後照鏡法', '後照鏡下緣壓車位前線', '標準，最常用'],
+            ['B 柱法', '左 B 柱對齊車位前線', '車道窄、想少倒一段'],
+            ['一次進法', '車身斜 45 度對準車位', '車道寬、想一把進']
+          ],
+          note: '三種打法收尾都一樣：車身與車位線平行就回正，直線倒到底。'
+        },
+        variants: [
+          {
+            id: 'mirror',
+            name: '後照鏡法',
+            sway: '標準',
+            when: '最常用。車位大小正常、旁邊有車。',
+            start: '車身與左側旁車平行，距 50–80 cm',
+            refs: [
+              { k: '起點', v: '車身與車位線平行，距旁車 50–80 cm' },
+              { k: '打方向點', v: '後照鏡下緣切到車位前緣線' },
+              { k: '回正點', v: '後照鏡裡，車身與車位線平行' }
+            ],
+            steps: [
+              {
+                judge: '車身　⟷　旁車平行，距 50–80 cm',
+                move: 'fwd',
+                note: '開過車位'
+              },
+              {
+                judge: '後照鏡下緣　⟷　車位前緣線',
+                move: 'rev',
+                note: '對到就停'
+              },
+              {
+                judge: '左後輪　⟷　車位左線',
+                turn: 'L',
+                amount: '滿',
+                move: 'rev'
+              },
+              {
+                judge: '車身　⟷　車位線平行',
+                move: 'rev',
+                action: '方向盤回正'
+              },
+              {
+                judge: '車頭離前車、車尾離後牆　⟷　各留一點',
+                action: '停'
+              }
+            ],
+            rescue: PARK_RESCUE,
+            limits: PARK_LIMITS
+          },
+          {
+            id: 'bpillar',
+            name: 'B 柱法',
+            sway: '少倒一段',
+            when: '車道比較窄、後面有車在等，想少倒一段就直接轉。',
+            start: '左側 B 柱對齊車位前線',
+            refs: [
+              { k: '起點', v: '車身與車位線平行，左 B 柱對齊車位前線' },
+              { k: '打方向點', v: 'B 柱一到車位前線就打死，不要再多往前' },
+              { k: '回正點', v: '後照鏡裡，車身與車位線平行' }
+            ],
+            steps: [
+              {
+                judge: '車身　⟷　旁車平行，距 50–80 cm',
+                move: 'fwd',
+                note: '開過車位'
+              },
+              {
+                judge: '左側 B 柱　⟷　車位前線',
+                turn: 'L',
+                amount: '滿',
+                move: 'rev'
+              },
+              {
+                judge: '左後輪　⟷　車位左線',
+                move: 'rev',
+                note: '沿著左線進去'
+              },
+              {
+                judge: '車身　⟷　車位線平行',
+                move: 'rev',
+                action: '方向盤回正'
+              },
+              {
+                judge: '車頭離前車、車尾離後牆　⟷　各留一點',
+                action: '停'
+              }
+            ],
+            rescue: PARK_RESCUE,
+            limits: PARK_LIMITS
+          },
+          {
+            id: 'once',
+            name: '一次進法',
+            sway: '一把進',
+            when: '車道夠寬、旁邊沒車，不想來回修。',
+            start: '車尾對齊車位前線，車身與車位線約 45 度',
+            refs: [
+              { k: '起點', v: '車尾到車位前線，車身斜 45 度' },
+              { k: '打方向點', v: '車尾對齊車位前線就打滿' },
+              { k: '回正點', v: '車身與車位線平行' }
+            ],
+            steps: [
+              {
+                judge: '車尾　⟷　車位前線',
+                turn: 'L',
+                move: 'rev',
+                note: '一邊斜切一邊對準'
+              },
+              {
+                judge: '車身與車位線　⟷　約 45 度',
+                turn: 'L',
+                amount: '滿',
+                move: 'rev'
+              },
+              {
+                judge: '車身　⟷　車位線平行',
+                move: 'rev',
+                action: '方向盤回正'
+              },
+              {
+                judge: '車頭離前車、車尾離後牆　⟷　各留一點',
+                action: '停'
+              }
+            ],
+            rescue: PARK_RESCUE,
+            limits: PARK_LIMITS
+          }
+        ]
       },
       {
-        judge: '後照鏡下緣　⟷　車位前緣線',
-        move: 'rev',
-        note: '對到就停'
-      },
-      {
-        judge: '右後輪　⟷　車位右線',
-        turn: 'R',
-        amount: '滿',
-        move: 'rev'
-      },
-      {
-        judge: '車身　⟷　車位線平行',
-        move: 'rev',
-        action: '方向盤回正'
-      },
-      {
-        judge: '車頭離前車、車尾離後牆　⟷　各留一點',
-        action: '停'
+        id: 'right',
+        name: '右側庫位',
+        when: '車位在副駕駛座這一側，倒車時往右打。',
+        start: '車身與右側旁車平行，車位在右邊',
+        compare: {
+          head: ['打法', '打方向時機', '適合'],
+          rows: [
+            ['後照鏡法', '後照鏡下緣壓車位前線', '標準，最常用'],
+            ['B 柱法', '右 B 柱對齊車位前線', '車道窄、想少倒一段'],
+            ['一次進法', '車身斜 45 度對準車位', '車道寬、想一把進']
+          ],
+          note: '三種打法收尾都一樣：車身與車位線平行就回正，直線倒到底。'
+        },
+        variants: [
+          {
+            id: 'mirror',
+            name: '後照鏡法',
+            sway: '標準',
+            when: '最常用。車位大小正常、旁邊有車。',
+            start: '車身與右側旁車平行，距 50–80 cm',
+            refs: [
+              { k: '起點', v: '車身與車位線平行，距旁車 50–80 cm' },
+              { k: '打方向點', v: '後照鏡下緣切到車位前緣線' },
+              { k: '回正點', v: '後照鏡裡，車身與車位線平行' }
+            ],
+            steps: [
+              {
+                judge: '車身　⟷　旁車平行，距 50–80 cm',
+                move: 'fwd',
+                note: '開過車位'
+              },
+              {
+                judge: '後照鏡下緣　⟷　車位前緣線',
+                move: 'rev',
+                note: '對到就停'
+              },
+              {
+                judge: '右後輪　⟷　車位右線',
+                turn: 'R',
+                amount: '滿',
+                move: 'rev'
+              },
+              {
+                judge: '車身　⟷　車位線平行',
+                move: 'rev',
+                action: '方向盤回正'
+              },
+              {
+                judge: '車頭離前車、車尾離後牆　⟷　各留一點',
+                action: '停'
+              }
+            ],
+            rescue: PARK_RESCUE,
+            limits: PARK_LIMITS
+          },
+          {
+            id: 'bpillar',
+            name: 'B 柱法',
+            sway: '少倒一段',
+            when: '車道比較窄、後面有車在等，想少倒一段就直接轉。',
+            start: '右側 B 柱對齊車位前線',
+            refs: [
+              { k: '起點', v: '車身與車位線平行，右 B 柱對齊車位前線' },
+              { k: '打方向點', v: 'B 柱一到車位前線就打死，不要再多往前' },
+              { k: '回正點', v: '後照鏡裡，車身與車位線平行' }
+            ],
+            steps: [
+              {
+                judge: '車身　⟷　旁車平行，距 50–80 cm',
+                move: 'fwd',
+                note: '開過車位'
+              },
+              {
+                judge: '右側 B 柱　⟷　車位前線',
+                turn: 'R',
+                amount: '滿',
+                move: 'rev'
+              },
+              {
+                judge: '右後輪　⟷　車位右線',
+                move: 'rev',
+                note: '沿著右線進去'
+              },
+              {
+                judge: '車身　⟷　車位線平行',
+                move: 'rev',
+                action: '方向盤回正'
+              },
+              {
+                judge: '車頭離前車、車尾離後牆　⟷　各留一點',
+                action: '停'
+              }
+            ],
+            rescue: PARK_RESCUE,
+            limits: PARK_LIMITS
+          },
+          {
+            id: 'once',
+            name: '一次進法',
+            sway: '一把進',
+            when: '車道夠寬、旁邊沒車，不想來回修。',
+            start: '車尾對齊車位前線，車身與車位線約 45 度',
+            refs: [
+              { k: '起點', v: '車尾到車位前線，車身斜 45 度' },
+              { k: '打方向點', v: '車尾對齊車位前線就打滿' },
+              { k: '回正點', v: '車身與車位線平行' }
+            ],
+            steps: [
+              {
+                judge: '車尾　⟷　車位前線',
+                turn: 'R',
+                move: 'rev',
+                note: '一邊斜切一邊對準'
+              },
+              {
+                judge: '車身與車位線　⟷　約 45 度',
+                turn: 'R',
+                amount: '滿',
+                move: 'rev'
+              },
+              {
+                judge: '車身　⟷　車位線平行',
+                move: 'rev',
+                action: '方向盤回正'
+              },
+              {
+                judge: '車頭離前車、車尾離後牆　⟷　各留一點',
+                action: '停'
+              }
+            ],
+            rescue: PARK_RESCUE,
+            limits: PARK_LIMITS
+          }
+        ]
       }
-    ],
-    rescue: [
-      '轉太早（車尾偏右、車頭會掃到左邊的車）→ 往前開回原位重來，不要原地扭方向盤。',
-      '轉太晚（車尾偏左）→ 先倒到底、回正，再小幅修正。',
-      '車位太窄（比車寬多不到 60 cm）→ 換車位，硬停最容易刮傷。',
-      '有倒車顯影也要看兩側後照鏡，廣角畫面會把距離壓縮。'
-    ],
-    limits: [
-      '車位長度至少車長 + 1 m 才好停。',
-      '車位在左邊時，左右全部對調（打滿左、看左後照鏡）。',
-      '斜線車位、機械車位的角度不同，不適用這套步驟。'
     ]
   },
   {
@@ -162,6 +425,7 @@ export const tricks: Trick[] = [
     no: '03',
     name: '路邊停車',
     tag: '停車',
+    badge: '4 種打法',
     oneLiner: '四種打法只差三件事：起點對哪裡、第一把幾圈、什麼時候回打。',
     situation: '路邊平行車位，前後都停了車。先選一種打法，再照步驟做。',
     refs: [],
@@ -176,6 +440,16 @@ export const tricks: Trick[] = [
       '車位長度至少車長 + 1.5 m；前後車貼很近時，選「打滿」或「車頭先進」。',
       '路緣高於 15 cm 或沒有路緣 → 改用車道線判斷，不要硬壓上去。'
     ],
+    compare: {
+      head: ['打法', '起點對位', '第一把'],
+      rows: [
+        ['半圈', 'B 柱對前車車頭', '右半圈'],
+        ['一圈', '車尾對前車車尾', '右一圈'],
+        ['打滿', '車尾對前車車尾', '右打滿'],
+        ['車頭先進', 'B 柱對後車車頭', '右打滿駛入']
+      ],
+      note: '共同收尾：左後視鏡看到後車完整車頭就回正直倒；右後視鏡看到右前門把手與路邊重合就左打滿；車身平行後前後微調。'
+    },
     variants: [
       {
         id: 'half',
