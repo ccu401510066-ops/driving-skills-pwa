@@ -340,7 +340,8 @@ export const tricks: Trick[] = [
           {
             action: '順著車格後車平行往前開，直到右側 B 柱對齊後車車頭',
             look: '右側 B 柱　vs　後車車頭',
-            cue: 'B 柱對後車'
+            cue: 'B 柱對後車',
+            image: './diagrams/nose-step1.jpg'
           },
           {
             action: '方向盤右打滿，直接把車頭駛入車格',
@@ -350,17 +351,20 @@ export const tricks: Trick[] = [
           {
             action: '左側 A 柱與車格左側白線重合時，左打滿往前開',
             look: '左 A 柱　vs　白線；右後視鏡中車身與後車約 2 指',
-            cue: 'A 柱對白線'
+            cue: 'A 柱對白線',
+            image: './diagrams/nose-step3.jpg'
           },
           {
             action: '左後視鏡看到車格後車完整車頭時，方向盤回正，直線倒車',
             look: '左後視鏡：後車車頭全部出現',
-            cue: '見後車頭'
+            cue: '見後車頭',
+            image: './diagrams/lock-step2.jpg'
           },
           {
             action: '右後視鏡看到右前門把手與路邊重合，左打滿倒車',
             look: '右後視鏡：門把手　vs　路邊',
-            cue: '把手壓路邊'
+            cue: '把手壓路邊',
+            image: './diagrams/half-step3.jpg'
           },
           {
             action: '車身平行後回正，視狀況前後微調',
