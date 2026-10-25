@@ -169,13 +169,15 @@ export const tricks: Trick[] = [
             judge: '左側後視鏡　⟷　庫位中間（擺幅大）～左鄰車中間（擺幅小）',
             turn: 'R',
             amount: '滿',
-            move: 'fwd'
+            move: 'fwd',
+            image: './diagrams/revleft-step2.jpg'
           },
           {
             judge: '左側後視鏡　⟷　目標庫位左庫角',
             turn: 'L',
             amount: '滿',
-            move: 'rev'
+            move: 'rev',
+            image: './diagrams/revleft-step3.jpg'
           },
           {
             judge: '車身　⟷　車位線平行',
