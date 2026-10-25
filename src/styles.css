@@ -613,6 +613,156 @@ button:focus-visible {
   opacity: 0.75;
 }
 
+/* ---------- 打法選擇 ---------- */
+.card-sub {
+  margin-left: 8px;
+  padding: 2px 7px;
+  border-radius: 999px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-size: 11.5px;
+  font-weight: 700;
+  vertical-align: middle;
+}
+
+.variant-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.variant-card {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 100%;
+  text-align: left;
+  padding: 14px 15px;
+  border-radius: 14px;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+}
+
+.variant-card:active {
+  background: var(--surface2);
+}
+
+.variant-top {
+  display: flex;
+  align-items: baseline;
+  gap: 9px;
+  flex-wrap: wrap;
+}
+
+.variant-no {
+  font-size: 12px;
+  font-weight: 800;
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
+}
+
+.variant-name {
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.variant-sway {
+  margin-left: auto;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.variant-when {
+  font-size: 13.5px;
+  line-height: 1.6;
+  opacity: 0.9;
+}
+
+.variant-start {
+  font-size: 12.5px;
+  color: var(--muted);
+}
+
+.compare {
+  display: flex;
+  flex-direction: column;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+}
+
+.compare-row {
+  display: grid;
+  grid-template-columns: 1fr 1.55fr 1fr;
+  gap: 8px;
+  padding: 10px 12px;
+  font-size: 13px;
+  border-top: 1px solid var(--line);
+  background: var(--surface);
+}
+
+.compare-row:first-child {
+  border-top: 0;
+}
+
+.compare-head {
+  background: var(--surface2);
+  font-weight: 700;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.compare-row span:nth-child(2) {
+  color: var(--muted);
+}
+
+.compare-note {
+  margin: 12px 0 0;
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--muted);
+}
+
+/* ---------- 示意圖 ---------- */
+.diagram {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin: 16px 0 4px;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  background: #0f141a;
+  cursor: zoom-in;
+}
+
+.zoom {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  background: rgba(0, 0, 0, 0.94);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px;
+}
+
+.zoom img {
+  width: 190%;
+  max-width: none;
+  height: auto;
+  cursor: zoom-out;
+}
+
+@media (min-width: 620px) {
+  .zoom img {
+    width: auto;
+    max-width: 96vw;
+    max-height: 94vh;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   * {
     animation: none !important;

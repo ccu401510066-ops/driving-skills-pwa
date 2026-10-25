@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 300" width="880" height="300">
+<rect width="880" height="300" fill="#0f141a"/>
+<polygon points="0.0,272.8 790.4,272.8 790.4,15.9 0.0,15.9" fill="#151c25"/>
+<polygon points="0.0,300.0 790.4,300.0 790.4,272.8 0.0,272.8" fill="#0a0e13"/>
+<line x1="0.0" y1="272.8" x2="790.4" y2="272.8" stroke="#5b6673" stroke-width="4"/>
+<polygon points="237.1,272.8 533.5,272.8 533.5,159.2 237.1,159.2" fill="rgba(75,92,110,0.14)" stroke="#4b5c6e" stroke-width="2.5" stroke-dasharray="10 8"/>
+<polygon points="553.3,267.9 750.9,267.9 750.9,183.9 553.3,183.9" fill="#39434f" stroke="#4e5b69" stroke-width="2"/>
+<polygon points="19.8,267.9 217.4,267.9 217.4,183.9 19.8,183.9" fill="#39434f" stroke="#4e5b69" stroke-width="2"/>
+<text x="652.1" y="230.9" font-size="13" fill="#8b98a8" text-anchor="middle" font-weight="500" opacity="1.0" font-family="system-ui,-apple-system,'Noto Sans TC','PingFang TC',sans-serif">前車</text>
+<text x="118.6" y="230.9" font-size="13" fill="#8b98a8" text-anchor="middle" font-weight="500" opacity="1.0" font-family="system-ui,-apple-system,'Noto Sans TC','PingFang TC',sans-serif">後車</text>
+<text x="22.0" y="26.0" font-size="18" fill="#cfd8e3" text-anchor="start" font-weight="700" opacity="1.0" font-family="system-ui,-apple-system,'Noto Sans TC','PingFang TC',sans-serif">車頭先進</text>
+<text x="22.0" y="46.0" font-size="12.5" fill="#8b98a8" text-anchor="start" font-weight="500" opacity="1.0" font-family="system-ui,-apple-system,'Noto Sans TC','PingFang TC',sans-serif">③ 左後視鏡看到後車車頭時回正直倒；右側門把手對路邊時左打滿倒車擺正</text>
+<polygon points="123.5,65.3 123.5,149.3 321.1,149.3 321.1,65.3" fill="none" stroke="#ffb020" stroke-width="2" opacity="0.42" stroke-dasharray="7 6"/>
+<text x="138.3" y="81.3" font-size="11.5" fill="#8b98a8" text-anchor="start" font-weight="400" opacity="0.85" font-family="system-ui,-apple-system,'Noto Sans TC','PingFang TC',sans-serif">起始：B 柱對後車車頭</text>
+<polygon points="362.7,67.7 313.3,135.6 473.2,251.7 522.5,183.8" fill="none" stroke="#8a6a2a" stroke-width="2" opacity="0.3" stroke-dasharray="6 6"/>
+<polygon points="292.0,129.6 292.0,213.6 489.6,213.6 489.6,129.6" fill="none" stroke="#8a6a2a" stroke-width="2" opacity="0.3" stroke-dasharray="6 6"/>
+<polygon points="287.0,173.5 287.0,257.5 484.6,257.5 484.6,173.5" fill="rgba(255,176,32,0.14)" stroke="#ffb020" stroke-width="3" opacity="1.0"/>
+<path d="M 489.6 171.6 Q 521.7 183.7 484.6 215.5" fill="none" stroke="#ffb020" stroke-width="2.5" opacity="0.9" marker-end="url(#ar)"/>
+<text x="578.0" y="146.9" font-size="12.5" fill="#ffb020" text-anchor="start" font-weight="500" opacity="1.0" font-family="system-ui,-apple-system,'Noto Sans TC','PingFang TC',sans-serif">倒車擺正</text>
+<defs><marker id="ar" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" fill="#ffb020"/></marker></defs>
+<text x="860.0" y="26.0" font-size="11.5" fill="#8b98a8" text-anchor="end" font-weight="500" opacity="1.0" font-family="system-ui,-apple-system,'Noto Sans TC','PingFang TC',sans-serif">示意動作分解，非實際行駛軌跡</text>
+<text x="860" y="286" font-size="11" fill="#8b98a8" text-anchor="end" font-family="system-ui,-apple-system,'Noto Sans TC','PingFang TC',sans-serif">俯視示意，比例與實際停車格略有差異</text>
+</svg>

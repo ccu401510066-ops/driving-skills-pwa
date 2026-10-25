@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 300" width="880" height="300">
+<rect width="880" height="300" fill="#0f141a"/>
+<polygon points="0.0,272.8 790.4,272.8 790.4,15.9 0.0,15.9" fill="#151c25"/>
+<polygon points="0.0,300.0 790.4,300.0 790.4,272.8 0.0,272.8" fill="#0a0e13"/>
+<line x1="0.0" y1="272.8" x2="790.4" y2="272.8" stroke="#5b6673" stroke-width="4"/>
+<polygon points="237.1,272.8 533.5,272.8 533.5,159.2 237.1,159.2" fill="rgba(75,92,110,0.14)" stroke="#4b5c6e" stroke-width="2.5" stroke-dasharray="10 8"/>
+<polygon points="553.3,267.9 750.9,267.9 750.9,183.9 553.3,183.9" fill="#39434f" stroke="#4e5b69" stroke-width="2"/>
+<polygon points="19.8,267.9 217.4,267.9 217.4,183.9 19.8,183.9" fill="#39434f" stroke="#4e5b69" stroke-width="2"/>
+<text x="652.1" y="230.9" font-size="13" fill="#8b98a8" text-anchor="middle" font-weight="500" opacity="1.0" font-family="system-ui,-apple-system,'Noto Sans TC','PingFang TC',sans-serif">前車</text>
+<text x="118.6" y="230.9" font-size="13" fill="#8b98a8" text-anchor="middle" font-weight="500" opacity="1.0" font-family="system-ui,-apple-system,'Noto Sans TC','PingFang TC',sans-serif">後車</text>
+<text x="22.0" y="26.0" font-size="18" fill="#cfd8e3" text-anchor="start" font-weight="700" opacity="1.0" font-family="system-ui,-apple-system,'Noto Sans TC','PingFang TC',sans-serif">右打一圈</text>
+<text x="22.0" y="46.0" font-size="12.5" fill="#8b98a8" text-anchor="start" font-weight="500" opacity="1.0" font-family="system-ui,-apple-system,'Noto Sans TC','PingFang TC',sans-serif">② 右側後視鏡看到右前門把手與路邊重合，方向盤左打滿繼續倒車</text>
+<polyline points="642.2,107.3 640.1,106.9 638.0,106.4 636.0,106.0 633.9,105.5 631.8,105.1 629.7,104.7 627.6,104.3 625.5,104.0 623.4,103.6 621.3,103.3 619.2,103.0 617.1,102.7 615.0,102.4 612.9,102.1 610.7,101.8 608.6,101.6 606.5,101.4 604.4,101.2 602.3,101.0 600.1,100.8 598.0,100.6 595.9,100.5 593.8,100.4 591.6,100.3 589.5,100.2 587.4,100.1 585.3,100.0 583.1,100.0 581.0,99.9 578.9,99.9 576.7,99.9 574.6,99.9 572.5,99.9 570.3,100.0 568.2,100.0 566.1,100.1 564.0,100.2 561.8,100.3 559.7,100.4 557.6,100.6 555.5,100.7 553.3,100.9 551.2,101.1 549.1,101.3 547.0,101.5 544.8,101.7 542.7,102.0 540.6,102.3 538.5,102.5 536.4,102.8 534.3,103.1 532.2,103.5 530.1,103.8 528.0,104.2 525.9,104.5 523.8,104.9 521.7,105.3 519.6,105.8 517.5,106.2 515.4,106.7 513.4,107.1 511.3,107.6 509.2,108.1 507.2,108.6 505.1,109.1 503.0,109.7 501.0,110.3 498.9,110.8 496.9,111.4 494.8,112.0 492.8,112.6 490.8,113.3 488.7,113.9 486.7,114.6 484.7,115.3 482.7,116.0 480.7,116.7 478.7,117.4 476.7,118.2 474.7,118.9 472.7,119.7 470.7,120.5 468.7,121.3 466.8,122.1 464.8,122.9 462.9,123.8 460.9,124.6 459.0,125.5 457.0,126.4 455.1,127.3 453.2,128.2 451.3,129.1 449.4,130.1 447.5,131.0 447.5,131.0" fill="none" stroke="#ffb020" stroke-width="3.5" opacity="0.6" stroke-linecap="round"/>
+<polygon points="543.4,65.3 543.4,149.3 741.0,149.3 741.0,65.3" fill="none" stroke="#ffb020" stroke-width="2" opacity="0.5" stroke-dasharray="7 6"/>
+<circle cx="377.9" cy="132.7" r="13" fill="#ffb020"/><text x="377.9" y="137.7" font-size="15" fill="#10151b" text-anchor="middle" font-weight="700" opacity="1.0" font-family="system-ui,-apple-system,'Noto Sans TC','PingFang TC',sans-serif">1</text>
+<polygon points="344.8,162.5 398.9,226.8 550.1,99.6 496.0,35.3" fill="rgba(255,176,32,0.14)" stroke="#ffb020" stroke-width="3" opacity="1.0"/>
+<text x="860.0" y="26.0" font-size="12.5" fill="#8b98a8" text-anchor="end" font-weight="500" opacity="1.0" font-family="system-ui,-apple-system,'Noto Sans TC','PingFang TC',sans-serif">外擺幅度：中</text>
+<text x="860" y="286" font-size="11" fill="#8b98a8" text-anchor="end" font-family="system-ui,-apple-system,'Noto Sans TC','PingFang TC',sans-serif">俯視示意，比例與實際停車格略有差異</text>
+</svg>
