@@ -197,7 +197,7 @@ export const tricks: Trick[] = [
           {
             action: '方向盤右打半圈，開始倒車',
             look: '右後視鏡：車尾慢慢切進車位',
-            cue: '右半圈'
+            cue: '右半圈倒車'
           },
           {
             action: '右後視鏡看到右前門把手與路邊重合',
@@ -208,7 +208,7 @@ export const tricks: Trick[] = [
           {
             action: '方向盤左打滿，繼續倒車',
             look: '車身與路邊逐漸平行',
-            cue: '左打滿'
+            cue: '左打滿倒車'
           },
           {
             action: '大部分車身入庫後回正，視狀況前後微調',
@@ -246,7 +246,7 @@ export const tricks: Trick[] = [
           {
             action: '方向盤右打一圈，開始倒車',
             look: '右後視鏡：車尾切進車位的角度',
-            cue: '右一圈'
+            cue: '右一圈倒車'
           },
           {
             action: '右後視鏡看到右前門把手與路邊重合',
@@ -257,7 +257,7 @@ export const tricks: Trick[] = [
           {
             action: '方向盤左打滿，繼續倒車',
             look: '車身與路邊逐漸平行',
-            cue: '左打滿'
+            cue: '左打滿倒車'
           },
           {
             action: '車身平行後回正，視狀況前後微調',
@@ -295,7 +295,7 @@ export const tricks: Trick[] = [
           {
             action: '方向盤右打滿，開始倒車',
             look: '左後視鏡先確認沒有來車',
-            cue: '右打滿'
+            cue: '右打滿倒車'
           },
           {
             action: '轉到左後視鏡看到車格後車完整車頭',
