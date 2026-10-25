@@ -678,6 +678,12 @@ button:focus-visible {
   gap: 10px;
 }
 
+/* 左右並排（例如倒車入庫的左右側庫位） */
+.variant-list.two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
 .variant-card {
   display: flex;
   flex-direction: column;

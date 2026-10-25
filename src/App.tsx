@@ -73,7 +73,7 @@ function Home({ theme, onToggle }: { theme: 'dark' | 'light'; onToggle: () => vo
                   {t.name}
                   {t.badge && <span className="card-sub">{t.badge}</span>}
                 </span>
-                <span className="card-one">{t.oneLiner}</span>
+                {t.oneLiner && <span className="card-one">{t.oneLiner}</span>}
               </span>
               <span className="chev" aria-hidden="true">
                 ›
@@ -114,6 +114,8 @@ function Pick({
   const compare = grouped ? side?.compare : trick.compare
   const listTitle = side ? '選一種打法' : (trick.pickTitle ?? '選一種打法')
   const backTarget = grouped && side ? `#/pick/${trick.id}` : '#/'
+  const mantra = side ? side.name : trick.oneLiner
+  const situation = side ? side.when : trick.situation
 
   return (
     <div className="full">
@@ -129,14 +131,14 @@ function Pick({
       </header>
 
       <main className="full-body">
-        <p className="full-mantra">{side ? side.name : trick.oneLiner}</p>
-        <p className="full-situation">{side ? side.when : trick.situation}</p>
+        {mantra && <p className="full-mantra">{mantra}</p>}
+        {situation && <p className="full-situation">{situation}</p>}
 
         {side?.start && <p className="variant-start start-line">起點：{side.start}</p>}
 
         <section className="block">
           <h3>{listTitle}</h3>
-          <div className="variant-list">
+          <div className={items.length === 2 && !side ? 'variant-list two-col' : 'variant-list'}>
             {items.map((v, i) => (
               <button
                 className="variant-card"
@@ -150,7 +152,7 @@ function Pick({
                   <span className="variant-name">{v.name}</span>
                   {v.sway && <span className="variant-sway">{v.sway}</span>}
                 </span>
-                <span className="variant-when">{v.when}</span>
+                {v.when && <span className="variant-when">{v.when}</span>}
                 {v.start && <span className="variant-start">起點：{v.start}</span>}
                 {grouped && !side && (
                   <span className="variant-start more">{(v.variants ?? []).length} 種打法 ›</span>
@@ -200,6 +202,8 @@ function Sheet({
 }) {
   const steps = variant?.steps ?? trick.steps
   const overview = variant?.overview
+  const mantra = variant ? (side ? variant.name : (variant.sway || trick.oneLiner)) : trick.oneLiner
+  const situation = variant ? variant.when : trick.situation
   const backTarget = side
     ? `#/pick/${trick.id}/${side.id}`
     : trick.variants
@@ -220,17 +224,13 @@ function Sheet({
       </header>
 
       <main className="full-body">
-        <p className="full-mantra">
-          {variant
-            ? side
-              ? variant.name
-              : (variant.sway ?? trick.oneLiner)
-            : trick.oneLiner}
-        </p>
-        <p className="full-situation">
-          {side && <span className="side-chip">{side.name}</span>}
-          {variant ? variant.when : trick.situation}
-        </p>
+        {mantra && <p className="full-mantra">{mantra}</p>}
+        {(side || situation) && (
+          <p className="full-situation">
+            {side && <span className="side-chip">{side.name}</span>}
+            {situation}
+          </p>
+        )}
 
         {overview && (
           <figure className="overview">
