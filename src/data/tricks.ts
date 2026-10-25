@@ -162,11 +162,11 @@ export const tricks: Trick[] = [
         ],
         steps: [
           {
-            judge: '左側後視鏡　⟷　庫位中間～庫位左鄰車中間',
             move: 'fwd',
             note: '順著車格往前開'
           },
           {
+            judge: '左側後視鏡　⟷　庫位中間～庫位左鄰車中間',
             turn: 'R',
             amount: '滿',
             move: 'fwd'
@@ -199,11 +199,11 @@ export const tricks: Trick[] = [
         ],
         steps: [
           {
-            judge: '右側後視鏡　⟷　庫位中間～庫位右鄰車中間',
             move: 'fwd',
             note: '順著車格往前開'
           },
           {
+            judge: '右側後視鏡　⟷　庫位中間～庫位右鄰車中間',
             turn: 'L',
             amount: '滿',
             move: 'fwd'
