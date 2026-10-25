@@ -218,7 +218,6 @@ function Brief({
     { kind: 'rescue' }
   ]
   const [idx, setIdx] = useState(0)
-  const [zoom, setZoom] = useState<string | null>(null)
   const touchX = useRef<number | null>(null)
   const total = pages.length
 
@@ -300,17 +299,6 @@ function Brief({
               {steps[page.index].look}
             </p>
             <p className="cue">{steps[page.index].cue}</p>
-            {steps[page.index].diagram && (
-              <img
-                className="diagram"
-                src={`${import.meta.env.BASE_URL}${steps[page.index].diagram}`}
-                alt={`${variant?.name ?? trick.name} 第 ${page.index + 1} 步俯視示意圖`}
-                loading="lazy"
-                onClick={() =>
-                  setZoom(`${import.meta.env.BASE_URL}${steps[page.index].diagram}`)
-                }
-              />
-            )}
           </div>
         )}
 
@@ -344,12 +332,6 @@ function Brief({
           下一步
         </button>
       </footer>
-
-      {zoom && (
-        <div className="zoom" onClick={() => setZoom(null)}>
-          <img src={zoom} alt="放大示意圖" />
-        </div>
-      )}
     </div>
   )
 }
@@ -370,7 +352,6 @@ function Full({
   const rescue = variant?.rescue ?? trick.rescue
   const limits = variant?.limits ?? trick.limits
   const backTarget = variant ? `#/pick/${trick.id}` : '#/'
-  const [zoom, setZoom] = useState<string | null>(null)
 
   return (
     <div className="full">
@@ -435,15 +416,6 @@ function Full({
                     {s.look}
                   </p>
                   <span className="cue small">{s.cue}</span>
-                  {s.diagram && (
-                    <img
-                      className="diagram"
-                      src={`${import.meta.env.BASE_URL}${s.diagram}`}
-                      alt={`第 ${i + 1} 步俯視示意圖`}
-                      loading="lazy"
-                      onClick={() => setZoom(`${import.meta.env.BASE_URL}${s.diagram}`)}
-                    />
-                  )}
                 </li>
               ))}
             </ol>
@@ -477,12 +449,6 @@ function Full({
           用逐步模式看 ›
         </button>
       </main>
-
-      {zoom && (
-        <div className="zoom" onClick={() => setZoom(null)}>
-          <img src={zoom} alt="放大示意圖" />
-        </div>
-      )}
     </div>
   )
 }

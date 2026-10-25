@@ -725,44 +725,6 @@ button:focus-visible {
   color: var(--muted);
 }
 
-/* ---------- 示意圖 ---------- */
-.diagram {
-  display: block;
-  width: 100%;
-  height: auto;
-  margin: 16px 0 4px;
-  border-radius: 12px;
-  border: 1px solid var(--line);
-  background: #0f141a;
-  cursor: zoom-in;
-}
-
-.zoom {
-  position: fixed;
-  inset: 0;
-  z-index: 60;
-  background: rgba(0, 0, 0, 0.94);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 6px;
-}
-
-.zoom img {
-  width: 190%;
-  max-width: none;
-  height: auto;
-  cursor: zoom-out;
-}
-
-@media (min-width: 620px) {
-  .zoom img {
-    width: auto;
-    max-width: 96vw;
-    max-height: 94vh;
-  }
-}
-
 @media (prefers-reduced-motion: reduce) {
   * {
     animation: none !important;

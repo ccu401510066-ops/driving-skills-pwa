@@ -10,8 +10,6 @@ export type Step = {
   look: string
   /** 四個字以內的口訣 */
   cue: string
-  /** 俯視示意圖（public 下的路徑） */
-  diagram?: string
 }
 
 export type Variant = {
@@ -187,32 +185,27 @@ export const tricks: Trick[] = [
           {
             action: '順著前車平行往前開，直到右側 B 柱對齊前車車頭',
             look: '右側 B 柱　vs　前車車頭',
-            cue: 'B 柱對車頭',
-            diagram: 'diagrams/half-1.svg'
+            cue: 'B 柱對車頭'
           },
           {
             action: '方向盤右打半圈，開始倒車',
             look: '右後視鏡：車尾慢慢切進車位',
-            cue: '右半圈',
-            diagram: 'diagrams/half-2.svg'
+            cue: '右半圈'
           },
           {
             action: '右後視鏡看到右前門把手與路邊重合',
             look: '右後視鏡：門把手　vs　路邊',
-            cue: '把手壓路邊',
-            diagram: 'diagrams/half-2.svg'
+            cue: '把手壓路邊'
           },
           {
             action: '方向盤左打滿，繼續倒車',
             look: '車身與路邊逐漸平行',
-            cue: '左打滿',
-            diagram: 'diagrams/half-3.svg'
+            cue: '左打滿'
           },
           {
             action: '大部分車身入庫後回正，視狀況前後微調',
             look: '前後各留約 60 cm',
-            cue: '平行微調',
-            diagram: 'diagrams/half-3.svg'
+            cue: '平行微調'
           }
         ],
         rescue: [
@@ -239,32 +232,27 @@ export const tricks: Trick[] = [
           {
             action: '順著前車平行往前開，直到車尾對齊前車車尾',
             look: '車尾　vs　前車車尾',
-            cue: '尾對尾',
-            diagram: 'diagrams/full-1.svg'
+            cue: '尾對尾'
           },
           {
             action: '方向盤右打一圈，開始倒車',
             look: '右後視鏡：車尾切進車位的角度',
-            cue: '右一圈',
-            diagram: 'diagrams/full-2.svg'
+            cue: '右一圈'
           },
           {
             action: '右後視鏡看到右前門把手與路邊重合',
             look: '右後視鏡：門把手　vs　路邊',
-            cue: '把手壓路邊',
-            diagram: 'diagrams/full-2.svg'
+            cue: '把手壓路邊'
           },
           {
             action: '方向盤左打滿，繼續倒車',
             look: '車身與路邊逐漸平行',
-            cue: '左打滿',
-            diagram: 'diagrams/full-3.svg'
+            cue: '左打滿'
           },
           {
             action: '車身平行後回正，視狀況前後微調',
             look: '前後各留約 60 cm',
-            cue: '平行微調',
-            diagram: 'diagrams/full-3.svg'
+            cue: '平行微調'
           }
         ],
         rescue: [
@@ -291,32 +279,27 @@ export const tricks: Trick[] = [
           {
             action: '車尾對齊前車車尾，方向盤右打滿，開始倒車',
             look: '左後視鏡先確認沒有來車',
-            cue: '尾對尾、右到底',
-            diagram: 'diagrams/lock-1.svg'
+            cue: '尾對尾、右到底'
           },
           {
             action: '轉到左後視鏡看到車格後車完整車頭',
             look: '左後視鏡：後車車頭全部出現',
-            cue: '見後車頭',
-            diagram: 'diagrams/lock-2.svg'
+            cue: '見後車頭'
           },
           {
             action: '方向盤回正，直線倒車',
             look: '車身沿著車位線平行後退',
-            cue: '回正直倒',
-            diagram: 'diagrams/lock-2.svg'
+            cue: '回正直倒'
           },
           {
             action: '右後視鏡看到右前門把手與路邊重合，左打滿倒車',
             look: '右後視鏡：門把手　vs　路邊',
-            cue: '把手壓路邊',
-            diagram: 'diagrams/lock-3.svg'
+            cue: '把手壓路邊'
           },
           {
             action: '車身平行後回正，視狀況前後微調',
             look: '前後各留約 60 cm',
-            cue: '平行微調',
-            diagram: 'diagrams/lock-3.svg'
+            cue: '平行微調'
           }
         ],
         rescue: [
@@ -344,38 +327,32 @@ export const tricks: Trick[] = [
           {
             action: '順著車格後車平行往前開，直到右側 B 柱對齊後車車頭',
             look: '右側 B 柱　vs　後車車頭',
-            cue: 'B 柱對後車',
-            diagram: 'diagrams/nose-1.svg'
+            cue: 'B 柱對後車'
           },
           {
             action: '方向盤右打滿，直接把車頭駛入車格',
             look: '車頭切進車位，注意左前角不要掃到前車',
-            cue: '右打滿進',
-            diagram: 'diagrams/nose-1.svg'
+            cue: '右打滿進'
           },
           {
             action: '左側 A 柱與車格左側白線重合時，左打滿往前開',
             look: '左 A 柱　vs　白線；右後視鏡中車身與後車約 2 指',
-            cue: 'A 柱對白線',
-            diagram: 'diagrams/nose-2.svg'
+            cue: 'A 柱對白線'
           },
           {
             action: '左後視鏡看到車格後車完整車頭時，方向盤回正，直線倒車',
             look: '左後視鏡：後車車頭全部出現',
-            cue: '見後車頭',
-            diagram: 'diagrams/nose-3.svg'
+            cue: '見後車頭'
           },
           {
             action: '右後視鏡看到右前門把手與路邊重合，左打滿倒車',
             look: '右後視鏡：門把手　vs　路邊',
-            cue: '把手壓路邊',
-            diagram: 'diagrams/nose-3.svg'
+            cue: '把手壓路邊'
           },
           {
             action: '車身平行後回正，視狀況前後微調',
             look: '前後各留約 60 cm',
-            cue: '平行微調',
-            diagram: 'diagrams/nose-3.svg'
+            cue: '平行微調'
           }
         ],
         rescue: [
