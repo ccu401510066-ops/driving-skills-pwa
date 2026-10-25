@@ -71,6 +71,8 @@ export type Trick = {
   compare?: Compare
   /** 選打法那一頁的標題，沒給就用預設 */
   pickTitle?: string
+  /** 選打法那一頁用並排的大按鈕（名稱直書） */
+  bigPick?: boolean
   /** 同一招的多種打法（有的話，點進來先選） */
   variants?: Variant[]
 }
@@ -140,7 +142,7 @@ export const tricks: Trick[] = [
     no: '02',
     name: '倒車入庫',
     tag: '停車',
-    badge: '左右兩側',
+    badge: '左右各 2 種',
     oneLiner: '',
     situation: '',
     refs: [],
@@ -148,6 +150,7 @@ export const tricks: Trick[] = [
     rescue: PARK_RESCUE,
     limits: PARK_LIMITS,
     pickTitle: '選車位在哪一側',
+    bigPick: true,
     variants: [
       {
         id: 'left',
@@ -225,6 +228,28 @@ export const tricks: Trick[] = [
             move: 'rev'
           }
         ],
+        rescue: PARK_RESCUE,
+        limits: PARK_LIMITS
+      },
+      {
+        id: 'left-square',
+        name: '左側庫位（直角）',
+        sway: '',
+        when: '內容準備中，稍後補上。',
+        start: '',
+        refs: [],
+        steps: [],
+        rescue: PARK_RESCUE,
+        limits: PARK_LIMITS
+      },
+      {
+        id: 'right-square',
+        name: '右側庫位（直角）',
+        sway: '',
+        when: '內容準備中，稍後補上。',
+        start: '',
+        refs: [],
+        steps: [],
         rescue: PARK_RESCUE,
         limits: PARK_LIMITS
       }

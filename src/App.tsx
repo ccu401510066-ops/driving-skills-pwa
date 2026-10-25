@@ -111,8 +111,8 @@ function Pick({
   const grouped = twoLevels(trick)
   const side = sideId ? all.find((s) => s.id === sideId) : undefined
   const items = grouped ? (side?.variants ?? []) : all
-  /** 只有兩個選項（例如左側／右側庫位）：上下排、字放大、卡片不放起點那行 */
-  const bigPick = !side && items.length === 2
+  /** 庫位選擇頁：並排大按鈕、名稱直書，卡片不放起點那行 */
+  const bigPick = !side && !!trick.bigPick
   const compare = grouped ? side?.compare : trick.compare
   const listTitle = side ? '選一種打法' : (trick.pickTitle ?? '選一種打法')
   const backTarget = grouped && side ? `#/pick/${trick.id}` : '#/'
@@ -141,37 +141,43 @@ function Pick({
         <section className="block">
           <h3>{listTitle}</h3>
           <div className={bigPick ? 'variant-list two-col' : 'variant-list'}>
-            {items.map((v, i) => (
-              <button
-                className={bigPick ? 'variant-card big' : 'variant-card'}
-                key={v.id}
-                onClick={() =>
-                  go(grouped && !side ? `#/pick/${trick.id}/${v.id}` : methodPath(trick, side, v))
-                }
-              >
-                {bigPick ? (
-                  <>
-                    <span className="variant-no">{String(i + 1).padStart(2, '0')}</span>
-                    <span className="variant-name vertical">{v.name}</span>
-                  </>
-                ) : (
-                  <>
-                    <span className="variant-top">
+            {items.map((v, i) => {
+              const cut = v.name.indexOf('（')
+              const main = cut > 0 ? v.name.slice(0, cut) : v.name
+              const tag = cut > 0 ? v.name.slice(cut + 1).replace(/）$/, '') : ''
+              return (
+                <button
+                  className={bigPick ? 'variant-card big' : 'variant-card'}
+                  key={v.id}
+                  onClick={() =>
+                    go(grouped && !side ? `#/pick/${trick.id}/${v.id}` : methodPath(trick, side, v))
+                  }
+                >
+                  {bigPick ? (
+                    <>
                       <span className="variant-no">{String(i + 1).padStart(2, '0')}</span>
-                      <span className="variant-name">{v.name}</span>
-                      {v.sway && <span className="variant-sway">{v.sway}</span>}
-                    </span>
-                    {v.when && <span className="variant-when">{v.when}</span>}
-                    {v.start && <span className="variant-start">起點：{v.start}</span>}
-                    {grouped && !side && (
-                      <span className="variant-start more">
-                        {(v.variants ?? []).length} 種打法 ›
+                      <span className="variant-name vertical">{main}</span>
+                      {tag && <span className="variant-tag">{tag}</span>}
+                    </>
+                  ) : (
+                    <>
+                      <span className="variant-top">
+                        <span className="variant-no">{String(i + 1).padStart(2, '0')}</span>
+                        <span className="variant-name">{v.name}</span>
+                        {v.sway && <span className="variant-sway">{v.sway}</span>}
                       </span>
-                    )}
-                  </>
-                )}
-              </button>
-            ))}
+                      {v.when && <span className="variant-when">{v.when}</span>}
+                      {v.start && <span className="variant-start">起點：{v.start}</span>}
+                      {grouped && !side && (
+                        <span className="variant-start more">
+                          {(v.variants ?? []).length} 種打法 ›
+                        </span>
+                      )}
+                    </>
+                  )}
+                </button>
+              )
+            })}
           </div>
         </section>
 

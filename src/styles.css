@@ -685,9 +685,17 @@ button:focus-visible {
 .variant-card.big {
   align-items: center;
   justify-content: center;
-  gap: 10px;
-  min-height: 190px;
-  padding: 20px 12px;
+  gap: 8px;
+  min-height: 155px;
+  padding: 16px 10px;
+}
+
+.variant-tag {
+  padding: 1px 8px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  font-size: 11px;
+  color: var(--muted);
 }
 
 .variant-card.big .variant-no {
@@ -699,8 +707,8 @@ button:focus-visible {
 .variant-card.big .variant-name.vertical {
   writing-mode: vertical-rl;
   text-orientation: upright;
-  font-size: 23px;
-  letter-spacing: 0.18em;
+  font-size: 21px;
+  letter-spacing: 0.16em;
   line-height: 1;
 }
 
