@@ -160,8 +160,8 @@ export const tricks: Trick[] = [
           {
             id: 'slant',
             name: '打斜入庫',
-            sway: '',
-            when: '一般情況適用',
+            sway: '一般情況適用',
+            when: '',
             start: '左後視鏡對齊庫位中間～左鄰車中間（愈前面擺幅愈小）',
             refs: [
               { k: '起點', v: '左後視鏡對齊庫位中間～左鄰車中間（愈前面擺幅愈小），車身與車格平行' },
@@ -199,8 +199,8 @@ export const tricks: Trick[] = [
           {
             id: 'square',
             name: '直角入庫',
-            sway: '',
-            when: '路幅有限適用',
+            sway: '路幅有限適用',
+            when: '',
             start: '左後視鏡看到目標庫位左鄰車完整車頭',
             refs: [],
             steps: [
@@ -250,8 +250,8 @@ export const tricks: Trick[] = [
           {
             id: 'slant',
             name: '打斜入庫',
-            sway: '',
-            when: '一般情況適用',
+            sway: '一般情況適用',
+            when: '',
             start: '右後視鏡對齊右庫線～右鄰車中間（愈前面擺幅愈小）',
             refs: [
               { k: '起點', v: '右後視鏡對齊右庫線～右鄰車中間（愈前面擺幅愈小），車身與車格平行' },
@@ -290,8 +290,8 @@ export const tricks: Trick[] = [
           {
             id: 'square',
             name: '直角入庫',
-            sway: '',
-            when: '路幅有限適用',
+            sway: '路幅有限適用',
+            when: '',
             start: '目標庫位右鄰車車頭到右後車窗角落',
             refs: [],
             steps: [
@@ -342,8 +342,8 @@ export const tricks: Trick[] = [
       {
         id: 'rear',
         name: '車尾先進',
-        sway: '',
-        when: '一般情況適用',
+        sway: '一般情況適用',
+        when: '',
         pickTitle: '選一種打法',
         variants: [
           {
