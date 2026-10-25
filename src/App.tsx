@@ -112,7 +112,7 @@ function Pick({
   const side = sideId ? all.find((s) => s.id === sideId) : undefined
   const items = grouped ? (side?.variants ?? []) : all
   const compare = grouped ? side?.compare : trick.compare
-  const listTitle = grouped && !side ? '選車位在哪一側' : '選一種打法'
+  const listTitle = side ? '選一種打法' : (trick.pickTitle ?? '選一種打法')
   const backTarget = grouped && side ? `#/pick/${trick.id}` : '#/'
 
   return (
