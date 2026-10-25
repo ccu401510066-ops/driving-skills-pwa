@@ -10,13 +10,12 @@ function variantOf(trick: Trick | undefined, vid?: string): Variant | undefined 
   return trick?.variants?.find((v) => v.id === vid)
 }
 
-/** 動作列：方向符號 → 動作文字 → 行進方向 */
+/** 動作列：方向盤 → 行進方向 → 動作文字 */
 function stepAction(s: Step): string {
   const parts: string[] = []
   if (s.turn) parts.push(`${s.turn === 'R' ? '↻ 右打' : '↺ 左打'}${s.amount ?? ''}`)
-  if (s.move && !s.turn) parts.push(s.move === 'fwd' ? '↑ 前進' : '↓ 倒車')
+  if (s.move) parts.push(s.move === 'fwd' ? '↑ 前進' : '↓ 倒車')
   if (s.action) parts.push(s.action)
-  if (s.move && s.turn) parts.push(s.move === 'fwd' ? '↑ 前進' : '↓ 倒車')
   return parts.join('　')
 }
 
@@ -264,10 +263,8 @@ function Sheet({
                       {act && (
                         <div className="do">
                           <p className="do-text">{act}</p>
-                          <span className="cue small">{s.cue}</span>
                         </div>
                       )}
-                      {!act && <span className="cue small judge-cue">{s.cue}</span>}
                     </div>
                     {s.image && (
                       <figure className="step-img">

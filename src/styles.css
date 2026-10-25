@@ -366,29 +366,6 @@ button:focus-visible {
   color: var(--muted);
 }
 
-.cue {
-  display: inline-block;
-  margin: 24px 0 0;
-  padding: 10px 18px;
-  border-radius: 999px;
-  background: var(--accent);
-  color: var(--accent-ink);
-  font-size: 17px;
-  font-weight: 800;
-  letter-spacing: 0.06em;
-}
-
-.cue.small {
-  margin: 8px 0 0;
-  padding: 4px 11px;
-  font-size: 12.5px;
-  letter-spacing: 0.04em;
-}
-
-.judge-cue {
-  margin-top: 9px;
-}
-
 .rescue ul {
   list-style: none;
   margin: 4px 0 0;
