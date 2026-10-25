@@ -379,10 +379,14 @@ button:focus-visible {
 }
 
 .cue.small {
-  margin: 8px 0 0 26px;
+  margin: 8px 0 0;
   padding: 4px 11px;
   font-size: 12.5px;
   letter-spacing: 0.04em;
+}
+
+.judge-cue {
+  margin-top: 9px;
 }
 
 .rescue ul {
@@ -574,24 +578,42 @@ button:focus-visible {
   border-bottom: 1px solid var(--line);
 }
 
-.ol-head {
-  display: flex;
-  align-items: baseline;
-  gap: 10px;
-}
-
 .ol-no {
-  flex: none;
-  font-size: 12px;
+  display: inline-block;
+  margin-bottom: 7px;
+  font-size: 11px;
   font-weight: 800;
+  letter-spacing: 0.1em;
   color: var(--accent);
   font-variant-numeric: tabular-nums;
 }
 
-.ol-action {
-  font-size: 15.5px;
+/* 判斷：灰底小卡 */
+.judge {
+  margin: 0;
+  padding: 9px 12px;
+  border-radius: 10px;
+  border: 1px solid var(--line);
+  background: var(--surface2);
+  font-size: 13.5px;
   font-weight: 600;
   line-height: 1.55;
+  color: var(--text);
+}
+
+/* 動作：琥珀豎條 */
+.do {
+  margin-top: 9px;
+  padding: 1px 0 1px 12px;
+  border-left: 3px solid var(--accent);
+}
+
+.do-text {
+  margin: 0;
+  font-size: 17px;
+  font-weight: 700;
+  line-height: 1.55;
+  letter-spacing: -0.005em;
 }
 
 /* 有圖的步驟：左文字、右圖 */

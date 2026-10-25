@@ -4,10 +4,16 @@ export type Ref = {
 }
 
 export type Step = {
-  /** 動作，逐步模式的大字 */
-  action: string
-  /** 看哪裡／怎麼判斷 */
-  look: string
+  /** 判斷：要對到什麼（灰卡）。沒有就不顯示 */
+  judge?: string
+  /** 方向盤轉向 */
+  turn?: 'L' | 'R'
+  /** 方向盤圈數：半圈／一圈／滿 */
+  amount?: string
+  /** 車輛行進方向 */
+  move?: 'fwd' | 'rev'
+  /** 其餘動作描述 */
+  action?: string
   /** 四個字以內的口訣 */
   cue: string
   /** 這一步的圖，顯示在文字右側 */
@@ -69,28 +75,28 @@ export const tricks: Trick[] = [
     ],
     steps: [
       {
-        action: '停等時，停在看得到前車後輪的位置',
-        look: '這個點就是你的標準距離，以後都停這裡',
+        judge: '前車後輪接地點　⟷　看得見',
+        action: '停在這個位置',
         cue: '輪胎看得見'
       },
       {
-        action: '前進時盯住一個固定的地面參照，不要盯車頭',
-        look: '停止線、路緣石、前車輪胎接地點',
+        judge: '停止線／路緣石／前車輪胎接地點',
+        move: 'fwd',
+        action: '盯住它，不要盯車頭',
         cue: '眼睛放遠'
       },
       {
-        action: '參照點消失在車頭下緣，就停',
-        look: '那就是你這台車的極限點',
+        judge: '參照點　⟷　消失在車頭下緣',
+        action: '停',
         cue: '看不到就停'
       },
       {
-        action: '轉彎或過窄處，讓障礙物留在車頭右角的外側',
-        look: '右後照鏡＋車頭右角',
+        judge: '障礙物　⟷　車頭右角外側',
+        action: '過彎時走外側',
         cue: '走角外側'
       },
       {
-        action: '沒把握就下車看',
-        look: '下車 10 秒，勝過硬猜一次',
+        action: '下車看',
         cue: '不確定就停'
       }
     ],
@@ -119,28 +125,32 @@ export const tricks: Trick[] = [
     ],
     steps: [
       {
-        action: '開過車位，讓車位在右邊，車身與旁車平行',
-        look: '車身距旁車約 50–80 cm（一個手臂）',
+        judge: '車身　⟷　旁車平行，距 50–80 cm',
+        move: 'fwd',
+        action: '開過車位',
         cue: '平行留臂'
       },
       {
-        action: '直線倒退，直到後照鏡下緣壓到車位前緣線',
-        look: '後照鏡下緣　vs　車位前線',
+        judge: '後照鏡下緣　⟷　車位前緣線',
+        move: 'rev',
+        action: '直線倒退，對到就停',
         cue: '看線不看尾'
       },
       {
-        action: '方向盤打滿右，慢慢倒',
-        look: '右後照鏡：右後輪沿著車位右線進去',
+        judge: '右後輪　⟷　車位右線',
+        turn: 'R',
+        amount: '滿',
+        move: 'rev',
         cue: '輪胎貼線'
       },
       {
-        action: '車身與車位線平行時，方向盤回正',
-        look: '左後照鏡：車身線與車位線平行',
+        judge: '車身　⟷　車位線平行',
+        action: '方向盤回正・繼續倒',
         cue: '平行回正'
       },
       {
-        action: '直線倒到底，前後留均勻空間',
-        look: '車頭離前車、車尾離後牆各留一點',
+        judge: '車頭離前車、車尾離後牆　⟷　各留一點',
+        action: '停',
         cue: '停好再下'
       }
     ],
@@ -189,30 +199,32 @@ export const tricks: Trick[] = [
         ],
         steps: [
           {
-            action: '順著前車平行往前開，直到右側 B 柱對齊前車車頭',
-            look: '右側 B 柱　vs　前車車頭',
+            judge: '右側 B 柱　⟷　前車車頭',
+            move: 'fwd',
+            action: '順著前車平行開',
             cue: 'B 柱對車頭',
             image: './diagrams/half-step1.jpg'
           },
           {
-            action: '方向盤右打半圈，開始倒車',
-            look: '右後視鏡：車尾慢慢切進車位',
+            turn: 'R',
+            amount: '半圈',
+            move: 'rev',
             cue: '右半圈倒車'
           },
           {
-            action: '右後視鏡看到右前門把手與路邊重合',
-            look: '右後視鏡：門把手　vs　路邊',
+            judge: '右後視鏡　右前門把手　⟷　路邊',
             cue: '右前把手壓路邊',
             image: './diagrams/half-step3.jpg'
           },
           {
-            action: '方向盤左打滿，繼續倒車',
-            look: '車身與路邊逐漸平行',
+            turn: 'L',
+            amount: '滿',
+            move: 'rev',
             cue: '左打滿倒車'
           },
           {
-            action: '大部分車身入庫後回正，視狀況前後微調',
-            look: '前後各留約 60 cm',
+            judge: '車身　⟷　路邊平行',
+            action: '回正・前後微調',
             cue: '平行微調'
           }
         ],
@@ -238,30 +250,32 @@ export const tricks: Trick[] = [
         ],
         steps: [
           {
-            action: '順著前車平行往前開，直到車尾對齊前車車尾',
-            look: '車尾　vs　前車車尾',
+            judge: '車尾　⟷　前車車尾',
+            move: 'fwd',
+            action: '順著前車平行開',
             cue: '車尾對車尾',
             image: './diagrams/full-step1.jpg'
           },
           {
-            action: '方向盤右打一圈，開始倒車',
-            look: '右後視鏡：車尾切進車位的角度',
+            turn: 'R',
+            amount: '一圈',
+            move: 'rev',
             cue: '右一圈倒車'
           },
           {
-            action: '右後視鏡看到右前門把手與路邊重合',
-            look: '右後視鏡：門把手　vs　路邊',
+            judge: '右後視鏡　右前門把手　⟷　路邊',
             cue: '右前把手壓路邊',
             image: './diagrams/half-step3.jpg'
           },
           {
-            action: '方向盤左打滿，繼續倒車',
-            look: '車身與路邊逐漸平行',
+            turn: 'L',
+            amount: '滿',
+            move: 'rev',
             cue: '左打滿倒車'
           },
           {
-            action: '車身平行後回正，視狀況前後微調',
-            look: '前後各留約 60 cm',
+            judge: '車身　⟷　路邊平行',
+            action: '回正・前後微調',
             cue: '平行微調'
           }
         ],
@@ -287,36 +301,38 @@ export const tricks: Trick[] = [
         ],
         steps: [
           {
-            action: '順著前車平行往前開，直到車尾對齊前車車尾',
-            look: '車尾　vs　前車車尾',
+            judge: '車尾　⟷　前車車尾',
+            move: 'fwd',
+            action: '順著前車平行開',
             cue: '車尾對車尾',
             image: './diagrams/full-step1.jpg'
           },
           {
-            action: '方向盤右打滿，開始倒車',
-            look: '左後視鏡先確認沒有來車',
+            turn: 'R',
+            amount: '滿',
+            move: 'rev',
             cue: '右打滿倒車'
           },
           {
-            action: '轉到左後視鏡看到車格後車完整車頭',
-            look: '左後視鏡：後車車頭全部出現',
+            judge: '左後視鏡　⟷　後車完整車頭',
             cue: '左後見車頭',
             image: './diagrams/lock-step2.jpg'
           },
           {
-            action: '方向盤回正，直線倒車',
-            look: '車身沿著車位線平行後退',
+            action: '方向盤回正・直線倒車',
             cue: '回正直倒車'
           },
           {
-            action: '右後視鏡看到右前門把手與路邊重合，左打滿倒車',
-            look: '右後視鏡：門把手　vs　路邊',
+            judge: '右後視鏡　右前門把手　⟷　路邊',
+            turn: 'L',
+            amount: '滿',
+            move: 'rev',
             cue: '右前把手壓路邊',
             image: './diagrams/half-step3.jpg'
           },
           {
-            action: '車身平行後回正，視狀況前後微調',
-            look: '前後各留約 60 cm',
+            judge: '車身　⟷　路邊平行',
+            action: '回正・前後微調',
             cue: '平行微調'
           }
         ],
@@ -343,42 +359,46 @@ export const tricks: Trick[] = [
         ],
         steps: [
           {
-            action: '順著車格後車平行往前開，直到右側 B 柱對齊後車車頭',
-            look: '右側 B 柱　vs　後車車頭',
+            judge: '右側 B 柱　⟷　後車車頭',
+            move: 'fwd',
+            action: '順著後車平行開',
             cue: 'B 柱對後車',
             image: './diagrams/nose-step1.jpg'
           },
           {
-            action: '方向盤右打滿，直接把車頭駛入車格',
-            look: '車頭切進車位，注意左前角不要掃到前車',
+            turn: 'R',
+            amount: '滿',
+            move: 'fwd',
             cue: '右打滿駛入'
           },
           {
-            action: '直到左側 A 柱與車格左側白線重合',
-            look: '左 A 柱　vs　白線；右後視鏡中車身與後車約 2 指',
+            judge: '左 A 柱　⟷　車格左側白線',
             cue: 'A 柱對白線',
             image: './diagrams/nose-step3.jpg'
           },
           {
-            action: '左打滿駛出車格',
-            look: '車頭轉向車道，注意左前角與前車',
+            turn: 'L',
+            amount: '滿',
+            move: 'fwd',
             cue: '左打滿駛出'
           },
           {
-            action: '左後視鏡看到車格後車完整車頭時，方向盤回正，直線倒車',
-            look: '左後視鏡：後車車頭全部出現',
+            judge: '左後視鏡　⟷　後車完整車頭',
+            action: '方向盤回正・直線倒車',
             cue: '左後見車頭',
             image: './diagrams/lock-step2.jpg'
           },
           {
-            action: '右後視鏡看到右前門把手與路邊重合，左打滿倒車',
-            look: '右後視鏡：門把手　vs　路邊',
+            judge: '右後視鏡　右前門把手　⟷　路邊',
+            turn: 'L',
+            amount: '滿',
+            move: 'rev',
             cue: '右前把手壓路邊',
             image: './diagrams/half-step3.jpg'
           },
           {
-            action: '車身平行後回正，視狀況前後微調',
-            look: '前後各留約 60 cm',
+            judge: '車身　⟷　路邊平行',
+            action: '回正・前後微調',
             cue: '平行微調'
           }
         ],

@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react'
-import { tricks, tricksById, type Trick, type Variant } from './data/tricks'
+import { tricks, tricksById, type Step, type Trick, type Variant } from './data/tricks'
 
 type Route =
   | { view: 'home' }
@@ -8,6 +8,16 @@ type Route =
 
 function variantOf(trick: Trick | undefined, vid?: string): Variant | undefined {
   return trick?.variants?.find((v) => v.id === vid)
+}
+
+/** 動作列：方向符號 → 動作文字 → 行進方向 */
+function stepAction(s: Step): string {
+  const parts: string[] = []
+  if (s.turn) parts.push(`${s.turn === 'R' ? '↻ 右打' : '↺ 左打'}${s.amount ?? ''}`)
+  if (s.move && !s.turn) parts.push(s.move === 'fwd' ? '↑ 前進' : '↓ 倒車')
+  if (s.action) parts.push(s.action)
+  if (s.move && s.turn) parts.push(s.move === 'fwd' ? '↑ 前進' : '↓ 倒車')
+  return parts.join('　')
 }
 
 function parseHash(): Route {
@@ -177,7 +187,7 @@ function Pick({ trick, theme, onToggle }: { trick: Trick; theme: 'dark' | 'light
             <div className="compare-row">
               <span>車頭先進</span>
               <span>B 柱對後車車頭</span>
-              <span>右打滿進</span>
+              <span>右打滿駛入</span>
             </div>
           </div>
           <p className="compare-note">
@@ -244,22 +254,29 @@ function Sheet({
           <section className="block">
             <h3>步驟</h3>
             <ol className="steps">
-              {steps.map((s, i) => (
-                <li key={s.action} className={s.image ? 'has-img' : undefined}>
-                  <div className="step-main">
-                    <div className="ol-head">
+              {steps.map((s, i) => {
+                const act = stepAction(s)
+                return (
+                  <li key={i} className={s.image ? 'has-img' : undefined}>
+                    <div className="step-main">
                       <span className="ol-no">{String(i + 1).padStart(2, '0')}</span>
-                      <span className="ol-action">{s.action}</span>
+                      {s.judge && <p className="judge">{s.judge}</p>}
+                      {act && (
+                        <div className="do">
+                          <p className="do-text">{act}</p>
+                          <span className="cue small">{s.cue}</span>
+                        </div>
+                      )}
+                      {!act && <span className="cue small judge-cue">{s.cue}</span>}
                     </div>
-                    <span className="cue small">{s.cue}</span>
-                  </div>
-                  {s.image && (
-                    <figure className="step-img">
-                      <img src={s.image} alt={`步驟 ${i + 1} 示意圖`} loading="lazy" />
-                    </figure>
-                  )}
-                </li>
-              ))}
+                    {s.image && (
+                      <figure className="step-img">
+                        <img src={s.image} alt={`步驟 ${i + 1} 示意圖`} loading="lazy" />
+                      </figure>
+                    )}
+                  </li>
+                )
+              })}
             </ol>
           </section>
         )}
