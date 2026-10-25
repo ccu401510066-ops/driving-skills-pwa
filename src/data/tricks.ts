@@ -289,12 +289,14 @@ export const tricks: Trick[] = [
           {
             action: '車尾對齊前車車尾，方向盤右打滿，開始倒車',
             look: '左後視鏡先確認沒有來車',
-            cue: '尾對尾、右到底'
+            cue: '尾對尾、右到底',
+            image: './diagrams/full-step1.jpg'
           },
           {
             action: '轉到左後視鏡看到車格後車完整車頭',
             look: '左後視鏡：後車車頭全部出現',
-            cue: '見後車頭'
+            cue: '見後車頭',
+            image: './diagrams/lock-step2.jpg'
           },
           {
             action: '方向盤回正，直線倒車',
@@ -304,7 +306,8 @@ export const tricks: Trick[] = [
           {
             action: '右後視鏡看到右前門把手與路邊重合，左打滿倒車',
             look: '右後視鏡：門把手　vs　路邊',
-            cue: '把手壓路邊'
+            cue: '把手壓路邊',
+            image: './diagrams/half-step3.jpg'
           },
           {
             action: '車身平行後回正，視狀況前後微調',
