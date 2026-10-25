@@ -202,7 +202,7 @@ export const tricks: Trick[] = [
           {
             action: '右後視鏡看到右前門把手與路邊重合',
             look: '右後視鏡：門把手　vs　路邊',
-            cue: '把手壓路邊',
+            cue: '右前把手壓路邊',
             image: './diagrams/half-step3.jpg'
           },
           {
@@ -240,7 +240,7 @@ export const tricks: Trick[] = [
           {
             action: '順著前車平行往前開，直到車尾對齊前車車尾',
             look: '車尾　vs　前車車尾',
-            cue: '尾對尾',
+            cue: '車尾對車尾',
             image: './diagrams/full-step1.jpg'
           },
           {
@@ -251,7 +251,7 @@ export const tricks: Trick[] = [
           {
             action: '右後視鏡看到右前門把手與路邊重合',
             look: '右後視鏡：門把手　vs　路邊',
-            cue: '把手壓路邊',
+            cue: '右前把手壓路邊',
             image: './diagrams/half-step3.jpg'
           },
           {
@@ -289,7 +289,7 @@ export const tricks: Trick[] = [
           {
             action: '順著前車平行往前開，直到車尾對齊前車車尾',
             look: '車尾　vs　前車車尾',
-            cue: '尾對尾',
+            cue: '車尾對車尾',
             image: './diagrams/full-step1.jpg'
           },
           {
@@ -300,18 +300,18 @@ export const tricks: Trick[] = [
           {
             action: '轉到左後視鏡看到車格後車完整車頭',
             look: '左後視鏡：後車車頭全部出現',
-            cue: '見後車頭',
+            cue: '左後見車頭',
             image: './diagrams/lock-step2.jpg'
           },
           {
             action: '方向盤回正，直線倒車',
             look: '車身沿著車位線平行後退',
-            cue: '回正直倒'
+            cue: '回正直倒車'
           },
           {
             action: '右後視鏡看到右前門把手與路邊重合，左打滿倒車',
             look: '右後視鏡：門把手　vs　路邊',
-            cue: '把手壓路邊',
+            cue: '右前把手壓路邊',
             image: './diagrams/half-step3.jpg'
           },
           {
@@ -351,24 +351,29 @@ export const tricks: Trick[] = [
           {
             action: '方向盤右打滿，直接把車頭駛入車格',
             look: '車頭切進車位，注意左前角不要掃到前車',
-            cue: '右打滿進'
+            cue: '右打滿駛入'
           },
           {
-            action: '左側 A 柱與車格左側白線重合時，左打滿往前開',
+            action: '直到左側 A 柱與車格左側白線重合',
             look: '左 A 柱　vs　白線；右後視鏡中車身與後車約 2 指',
             cue: 'A 柱對白線',
             image: './diagrams/nose-step3.jpg'
           },
           {
+            action: '左打滿駛出車格',
+            look: '車頭轉向車道，注意左前角與前車',
+            cue: '左打滿駛出'
+          },
+          {
             action: '左後視鏡看到車格後車完整車頭時，方向盤回正，直線倒車',
             look: '左後視鏡：後車車頭全部出現',
-            cue: '見後車頭',
+            cue: '左後見車頭',
             image: './diagrams/lock-step2.jpg'
           },
           {
             action: '右後視鏡看到右前門把手與路邊重合，左打滿倒車',
             look: '右後視鏡：門把手　vs　路邊',
-            cue: '把手壓路邊',
+            cue: '右前把手壓路邊',
             image: './diagrams/half-step3.jpg'
           },
           {
