@@ -202,7 +202,8 @@ export const tricks: Trick[] = [
           {
             action: '右後視鏡看到右前門把手與路邊重合',
             look: '右後視鏡：門把手　vs　路邊',
-            cue: '把手壓路邊'
+            cue: '把手壓路邊',
+            image: './diagrams/half-step3.jpg'
           },
           {
             action: '方向盤左打滿，繼續倒車',
