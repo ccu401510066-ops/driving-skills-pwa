@@ -10,6 +10,8 @@ export type Step = {
   look: string
   /** 四個字以內的口訣 */
   cue: string
+  /** 這一步的圖，顯示在文字右側 */
+  image?: string
 }
 
 export type Variant = {
@@ -189,7 +191,8 @@ export const tricks: Trick[] = [
           {
             action: '順著前車平行往前開，直到右側 B 柱對齊前車車頭',
             look: '右側 B 柱　vs　前車車頭',
-            cue: 'B 柱對車頭'
+            cue: 'B 柱對車頭',
+            image: './diagrams/half-step1.jpg'
           },
           {
             action: '方向盤右打半圈，開始倒車',

@@ -245,16 +245,23 @@ function Sheet({
             <h3>步驟</h3>
             <ol className="steps">
               {steps.map((s, i) => (
-                <li key={s.action}>
-                  <div className="ol-head">
-                    <span className="ol-no">{String(i + 1).padStart(2, '0')}</span>
-                    <span className="ol-action">{s.action}</span>
+                <li key={s.action} className={s.image ? 'has-img' : undefined}>
+                  <div className="step-main">
+                    <div className="ol-head">
+                      <span className="ol-no">{String(i + 1).padStart(2, '0')}</span>
+                      <span className="ol-action">{s.action}</span>
+                    </div>
+                    <p className="ol-look">
+                      <span className="look-label">看</span>
+                      {s.look}
+                    </p>
+                    <span className="cue small">{s.cue}</span>
                   </div>
-                  <p className="ol-look">
-                    <span className="look-label">看</span>
-                    {s.look}
-                  </p>
-                  <span className="cue small">{s.cue}</span>
+                  {s.image && (
+                    <figure className="step-img">
+                      <img src={s.image} alt={`步驟 ${i + 1} 示意圖`} loading="lazy" />
+                    </figure>
+                  )}
                 </li>
               ))}
             </ol>

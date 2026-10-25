@@ -615,6 +615,35 @@ button:focus-visible {
   color: var(--muted);
 }
 
+/* 有圖的步驟：左文字、右圖 */
+
+.steps li.has-img {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.step-main {
+  flex: 1;
+  min-width: 0;
+}
+
+.step-img {
+  flex: none;
+  width: 38%;
+  max-width: 150px;
+  margin: 0;
+}
+
+.step-img img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+  border: 1px solid var(--line);
+  background: var(--surface2);
+}
+
 .plain-list {
   list-style: none;
   margin: 0;
