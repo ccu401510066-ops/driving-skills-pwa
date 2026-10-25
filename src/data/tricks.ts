@@ -21,6 +21,10 @@ export type Variant = {
   when: string
   /** 起始對位一句話 */
   start: string
+  /** 總示意圖（俯視），有圖才顯示 */
+  overview?: string
+  /** 圖說，說明圖上各段是什麼 */
+  overviewNote?: string
   refs: Ref[]
   steps: Step[]
   rescue: string[]
@@ -176,6 +180,8 @@ export const tricks: Trick[] = [
         sway: '車頭左側外擺幅度：小',
         when: '最常用。旁邊有車、有牆，不想讓車頭擺出去太多。',
         start: '右側 B 柱對齊前車車頭',
+        overview: './diagrams/half-overview.png',
+        overviewNote: '由左至右：① 起點對位　② 右打半圈倒車　③ 車身進格',
         refs: [
           { k: '起點', v: '右側 B 柱對齊前車車頭（車身與前車平行）' },
           { k: '回打點', v: '右後視鏡：右前門把手與路邊重合' },

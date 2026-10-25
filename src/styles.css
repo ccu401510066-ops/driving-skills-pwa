@@ -514,6 +514,34 @@ button:focus-visible {
   color: var(--muted);
 }
 
+.overview {
+  margin: 20px 0 0;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  background: var(--surface2);
+}
+
+.overview a {
+  display: block;
+  line-height: 0;
+}
+
+.overview img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.overview figcaption {
+  padding: 9px 12px 10px;
+  font-size: 12.5px;
+  line-height: 1.55;
+  color: var(--muted);
+  background: var(--surface);
+  border-top: 1px solid var(--line);
+}
+
 .block h3 {
   margin: 30px 0 10px;
   font-size: 12px;

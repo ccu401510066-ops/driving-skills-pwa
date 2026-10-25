@@ -1,10 +1,9 @@
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { tricks, tricksById, type Trick, type Variant } from './data/tricks'
 
 type Route =
   | { view: 'home' }
   | { view: 'pick'; id: string }
-  | { view: 'brief'; id: string; vid?: string }
   | { view: 'full'; id: string; vid?: string }
 
 function variantOf(trick: Trick | undefined, vid?: string): Variant | undefined {
@@ -16,8 +15,9 @@ function parseHash(): Route {
   const [view, id, vid] = clean.split('/')
   const trick = id ? tricksById[id] : undefined
   if (view === 'pick' && trick?.variants) return { view, id }
-  if ((view === 'brief' || view === 'full') && trick) {
-    return { view, id, vid: variantOf(trick, vid)?.id }
+  // 舊的逐步分頁網址一律導到同一頁
+  if ((view === 'full' || view === 'brief') && trick) {
+    return { view: 'full', id, vid: variantOf(trick, vid)?.id }
   }
   return { view: 'home' }
 }
@@ -29,7 +29,7 @@ function go(path: string) {
 
 /** 首頁卡片點進去的第一站 */
 function entry(t: Trick) {
-  return t.variants ? `#/pick/${t.id}` : `#/brief/${t.id}`
+  return t.variants ? `#/pick/${t.id}` : `#/full/${t.id}`
 }
 
 function useTheme() {
@@ -96,9 +96,6 @@ function Home({ theme, onToggle }: { theme: 'dark' | 'light'; onToggle: () => vo
             </button>
             <div className="card-foot">
               <span className="tag">{t.tag}</span>
-              <button className="link" onClick={() => go(`#/full/${t.id}`)}>
-                看完整內容
-              </button>
             </div>
           </div>
         ))}
@@ -140,7 +137,7 @@ function Pick({ trick, theme, onToggle }: { trick: Trick; theme: 'dark' | 'light
               <button
                 className="variant-card"
                 key={v.id}
-                onClick={() => go(`#/brief/${trick.id}/${v.id}`)}
+                onClick={() => go(`#/full/${trick.id}/${v.id}`)}
               >
                 <span className="variant-top">
                   <span className="variant-no">{String(i + 1).padStart(2, '0')}</span>
@@ -192,151 +189,7 @@ function Pick({ trick, theme, onToggle }: { trick: Trick; theme: 'dark' | 'light
   )
 }
 
-type Page =
-  | { kind: 'mantra' }
-  | { kind: 'step'; index: number }
-  | { kind: 'rescue' }
-
-function Brief({
-  trick,
-  variant,
-  theme,
-  onToggle
-}: {
-  trick: Trick
-  variant?: Variant
-  theme: 'dark' | 'light'
-  onToggle: () => void
-}) {
-  const steps = variant?.steps ?? trick.steps
-  const rescue = variant?.rescue ?? trick.rescue
-  const backTarget = variant ? `#/pick/${trick.id}` : '#/'
-
-  const pages: Page[] = [
-    { kind: 'mantra' },
-    ...steps.map((_, i) => ({ kind: 'step' as const, index: i })),
-    { kind: 'rescue' }
-  ]
-  const [idx, setIdx] = useState(0)
-  const touchX = useRef<number | null>(null)
-  const total = pages.length
-
-  const back = useCallback(() => {
-    if (idx === 0) go(backTarget)
-    else setIdx((i) => i - 1)
-  }, [idx, backTarget])
-
-  const next = useCallback(() => {
-    setIdx((i) => (i < total - 1 ? i + 1 : i))
-  }, [total])
-
-  useEffect(() => {
-    setIdx(0)
-  }, [trick.id, variant?.id])
-
-  useEffect(() => {
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'ArrowRight') next()
-      if (e.key === 'ArrowLeft') back()
-      if (e.key === 'Escape') go('#/')
-    }
-    window.addEventListener('keydown', onKey)
-    return () => window.removeEventListener('keydown', onKey)
-  }, [next, back])
-
-  const page = pages[idx]
-
-  return (
-    <div
-      className="brief"
-      onTouchStart={(e) => {
-        touchX.current = e.touches[0].clientX
-      }}
-      onTouchEnd={(e) => {
-        if (touchX.current === null) return
-        const dx = e.changedTouches[0].clientX - touchX.current
-        touchX.current = null
-        if (Math.abs(dx) < 50) return
-        if (dx < 0) next()
-        else back()
-      }}
-    >
-      <header className="brief-head">
-        <button className="icon-btn" onClick={back} aria-label={idx === 0 ? '回上一頁' : '上一步'}>
-          ‹
-        </button>
-        <div className="brief-title">
-          <span className="no-small">{trick.no}</span>
-          <span>{variant ? variant.name : trick.name}</span>
-        </div>
-        <div className="head-right">
-          <span className="counter">
-            {idx + 1}/{total}
-          </span>
-          <ThemeToggle theme={theme} onToggle={onToggle} />
-        </div>
-      </header>
-
-      <div className="progress" aria-hidden="true">
-        <span style={{ width: `${((idx + 1) / total) * 100}%` }} />
-      </div>
-
-      <section className="stage" key={idx}>
-        {page.kind === 'mantra' && (
-          <div className="mantra">
-            <p className="eyebrow">{variant ? variant.name : '心法'}</p>
-            <p className="mantra-text">{variant ? variant.sway : trick.oneLiner}</p>
-            <p className="situation">{variant ? variant.when : trick.situation}</p>
-          </div>
-        )}
-
-        {page.kind === 'step' && (
-          <div className="step">
-            <p className="step-no">{String(page.index + 1).padStart(2, '0')}</p>
-            <h2 className="step-action">{steps[page.index].action}</h2>
-            <p className="step-look">
-              <span className="look-label">看</span>
-              {steps[page.index].look}
-            </p>
-            <p className="cue">{steps[page.index].cue}</p>
-          </div>
-        )}
-
-        {page.kind === 'rescue' && (
-          <div className="rescue">
-            <p className="eyebrow">卡住時怎麼辦</p>
-            <ul>
-              {rescue.map((r) => (
-                <li key={r}>{r}</li>
-              ))}
-            </ul>
-            {idx === total - 1 && (
-              <button
-                className="wide-link"
-                onClick={() =>
-                  go(variant ? `#/full/${trick.id}/${variant.id}` : `#/full/${trick.id}`)
-                }
-              >
-                看完整內容（參照點、適用範圍）›
-              </button>
-            )}
-          </div>
-        )}
-      </section>
-
-      <footer className="brief-foot">
-        <button className="nav-btn ghost" onClick={back}>
-          {idx === 0 ? (variant ? '換打法' : '回列表') : '上一步'}
-        </button>
-        <button className="nav-btn primary" onClick={next} disabled={idx === total - 1}>
-          下一步
-        </button>
-      </footer>
-    </div>
-  )
-}
-
-function Full({
+function Sheet({
   trick,
   variant,
   theme,
@@ -351,6 +204,7 @@ function Full({
   const steps = variant?.steps ?? trick.steps
   const rescue = variant?.rescue ?? trick.rescue
   const limits = variant?.limits ?? trick.limits
+  const overview = variant?.overview
   const backTarget = variant ? `#/pick/${trick.id}` : '#/'
 
   return (
@@ -371,34 +225,21 @@ function Full({
           <>
             <p className="full-mantra">{variant.sway}</p>
             <p className="full-situation">{variant.when}</p>
-            <button className="wide-link" onClick={() => go(`#/pick/${trick.id}`)}>
-              換一種打法 ›
-            </button>
           </>
         ) : (
           <>
             <p className="full-mantra">{trick.oneLiner}</p>
             <p className="full-situation">{trick.situation}</p>
-            {trick.variants && (
-              <button className="wide-link" onClick={() => go(`#/pick/${trick.id}`)}>
-                選一種打法 ›
-              </button>
-            )}
           </>
         )}
 
-        {refs.length > 0 && (
-          <section className="block">
-            <h3>參照點</h3>
-            <dl className="refs">
-              {refs.map((r) => (
-                <div className="ref-row" key={r.k}>
-                  <dt>{r.k}</dt>
-                  <dd>{r.v}</dd>
-                </div>
-              ))}
-            </dl>
-          </section>
+        {overview && (
+          <figure className="overview">
+            <a href={overview} target="_blank" rel="noreferrer" aria-label="放大看示意圖">
+              <img src={overview} alt={`${variant?.name}路線示意圖`} />
+            </a>
+            <figcaption>{variant?.overviewNote ?? '俯視示意圖'}</figcaption>
+          </figure>
         )}
 
         {steps.length > 0 && (
@@ -422,6 +263,20 @@ function Full({
           </section>
         )}
 
+        {refs.length > 0 && (
+          <section className="block">
+            <h3>參照點</h3>
+            <dl className="refs">
+              {refs.map((r) => (
+                <div className="ref-row" key={r.k}>
+                  <dt>{r.k}</dt>
+                  <dd>{r.v}</dd>
+                </div>
+              ))}
+            </dl>
+          </section>
+        )}
+
         <section className="block">
           <h3>卡住時怎麼辦</h3>
           <ul className="plain-list">
@@ -440,14 +295,11 @@ function Full({
           </ul>
         </section>
 
-        <button
-          className="wide-link top-gap"
-          onClick={() =>
-            go(variant ? `#/brief/${trick.id}/${variant.id}` : `#/brief/${trick.id}`)
-          }
-        >
-          用逐步模式看 ›
-        </button>
+        {variant && (
+          <button className="wide-link top-gap" onClick={() => go(`#/pick/${trick.id}`)}>
+            換一種打法 ›
+          </button>
+        )}
       </main>
     </div>
   )
@@ -470,21 +322,10 @@ export default function App() {
   if (route.view === 'pick') {
     return <Pick trick={tricksById[route.id]} theme={theme} onToggle={toggle} />
   }
-  if (route.view === 'brief') {
-    const trick = tricksById[route.id]
-    return (
-      <Brief
-        trick={trick}
-        variant={variantOf(trick, route.vid)}
-        theme={theme}
-        onToggle={toggle}
-      />
-    )
-  }
   if (route.view === 'full') {
     const trick = tricksById[route.id]
     return (
-      <Full trick={trick} variant={variantOf(trick, route.vid)} theme={theme} onToggle={toggle} />
+      <Sheet trick={trick} variant={variantOf(trick, route.vid)} theme={theme} onToggle={toggle} />
     )
   }
   return <Home theme={theme} onToggle={toggle} />
