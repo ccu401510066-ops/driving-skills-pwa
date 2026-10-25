@@ -1,6 +1,15 @@
 import { useCallback, useEffect, useState } from 'react'
 import { tricks, tricksById, type Step, type Trick, type Variant } from './data/tricks'
-import { entry, methodOf, methodPath, parseRoute, sideOf, twoLevels, type Route } from './route'
+import {
+  entry,
+  isGroup,
+  methodOf,
+  methodPath,
+  parseRoute,
+  sideOf,
+  twoLevels,
+  type Route
+} from './route'
 
 /** 動作列：方向盤 → 動作 → 行進方向 → 行進補充 */
 function stepAction(s: Step): string {
@@ -69,19 +78,13 @@ function Home({ theme, onToggle }: { theme: 'dark' | 'light'; onToggle: () => vo
                 {t.no}
               </span>
               <span className="card-body">
-                <span className="card-name">
-                  {t.name}
-                  {t.badge && <span className="card-sub">{t.badge}</span>}
-                </span>
+                <span className="card-name">{t.name}</span>
                 {t.oneLiner && <span className="card-one">{t.oneLiner}</span>}
               </span>
               <span className="chev" aria-hidden="true">
                 ›
               </span>
             </button>
-            <div className="card-foot">
-              <span className="tag">{t.tag}</span>
-            </div>
           </div>
         ))}
       </nav>
@@ -110,11 +113,13 @@ function Pick({
   const all = trick.variants ?? []
   const grouped = twoLevels(trick)
   const side = sideId ? all.find((s) => s.id === sideId) : undefined
-  const items = grouped ? (side?.variants ?? []) : all
+  const items = grouped && side ? (side.variants ?? []) : all
   /** 庫位選擇頁：並排大按鈕、名稱直書，卡片不放起點那行 */
   const bigPick = !side && !!trick.bigPick
   const compare = grouped ? side?.compare : trick.compare
-  const listTitle = side ? '選一種打法' : (trick.pickTitle ?? '選一種打法')
+  const listTitle = side
+    ? (side.pickTitle ?? '選一種打法')
+    : (trick.pickTitle ?? '選一種打法')
   const backTarget = grouped && side ? `#/pick/${trick.id}` : '#/'
   const mantra = side ? side.name : trick.oneLiner
   const situation = side ? side.when : trick.situation
@@ -149,9 +154,14 @@ function Pick({
                 <button
                   className={bigPick ? 'variant-card big' : 'variant-card'}
                   key={v.id}
-                  onClick={() =>
-                    go(grouped && !side ? `#/pick/${trick.id}/${v.id}` : methodPath(trick, side, v))
-                  }
+                  onClick={() => {
+                    // 第一層：有子打法才再進一層，沒有的直接進內容
+                    if (grouped && !side) {
+                      go(isGroup(v) ? `#/pick/${trick.id}/${v.id}` : methodPath(trick, undefined, v))
+                      return
+                    }
+                    go(methodPath(trick, side, v))
+                  }}
                 >
                   {bigPick ? (
                     <>
@@ -168,10 +178,8 @@ function Pick({
                       </span>
                       {v.when && <span className="variant-when">{v.when}</span>}
                       {v.start && <span className="variant-start">起點：{v.start}</span>}
-                      {grouped && !side && (
-                        <span className="variant-start more">
-                          {(v.variants ?? []).length} 種打法 ›
-                        </span>
+                      {grouped && !side && isGroup(v) && (
+                        <span className="variant-start more">›</span>
                       )}
                     </>
                   )}
