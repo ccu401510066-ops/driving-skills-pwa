@@ -202,8 +202,6 @@ function Sheet({
 }) {
   const refs = variant?.refs ?? trick.refs
   const steps = variant?.steps ?? trick.steps
-  const rescue = variant?.rescue ?? trick.rescue
-  const limits = variant?.limits ?? trick.limits
   const overview = variant?.overview
   const backTarget = variant ? `#/pick/${trick.id}` : '#/'
 
@@ -277,24 +275,6 @@ function Sheet({
           </section>
         )}
 
-        <section className="block">
-          <h3>卡住時怎麼辦</h3>
-          <ul className="plain-list">
-            {rescue.map((r) => (
-              <li key={r}>{r}</li>
-            ))}
-          </ul>
-        </section>
-
-        <section className="block">
-          <h3>適用與不適用</h3>
-          <ul className="plain-list">
-            {limits.map((r) => (
-              <li key={r}>{r}</li>
-            ))}
-          </ul>
-        </section>
-
         {variant && (
           <button className="wide-link top-gap" onClick={() => go(`#/pick/${trick.id}`)}>
             換一種打法 ›
@@ -324,9 +304,12 @@ export default function App() {
   }
   if (route.view === 'full') {
     const trick = tricksById[route.id]
-    return (
-      <Sheet trick={trick} variant={variantOf(trick, route.vid)} theme={theme} onToggle={toggle} />
-    )
+    const variant = variantOf(trick, route.vid)
+    // 有多種打法的招式，沒指定打法就先去選
+    if (trick.variants && !variant) {
+      return <Pick trick={trick} theme={theme} onToggle={toggle} />
+    }
+    return <Sheet trick={trick} variant={variant} theme={theme} onToggle={toggle} />
   }
   return <Home theme={theme} onToggle={toggle} />
 }
