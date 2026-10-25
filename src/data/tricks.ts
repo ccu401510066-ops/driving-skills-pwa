@@ -235,10 +235,39 @@ export const tricks: Trick[] = [
         id: 'left-square',
         name: '左側庫位（直角）',
         sway: '',
-        when: '內容準備中，稍後補上。',
-        start: '',
+        when: '',
+        start: '左後視鏡看到目標庫位左鄰車完整車頭',
         refs: [],
-        steps: [],
+        steps: [
+          {
+            move: 'fwd',
+            note: '順著車格往前開'
+          },
+          {
+            judge: '左側後視鏡　⟷　左鄰車完整車頭',
+            turn: 'L',
+            amount: '滿',
+            move: 'rev'
+          },
+          {
+            judge: '左側後視鏡　⟷　與左鄰車距離由窄變寬',
+            turn: 'R',
+            amount: '滿',
+            move: 'fwd',
+            note: '繞過左鄰車右前角，往前調整一把'
+          },
+          {
+            judge: '左側後視鏡　⟷　車身與左鄰車距離收攏',
+            turn: 'L',
+            amount: '滿',
+            move: 'rev'
+          },
+          {
+            judge: '車身　⟷　車位線平行',
+            action: '方向盤回正',
+            move: 'rev'
+          }
+        ],
         rescue: PARK_RESCUE,
         limits: PARK_LIMITS
       },
@@ -246,10 +275,27 @@ export const tricks: Trick[] = [
         id: 'right-square',
         name: '右側庫位（直角）',
         sway: '',
-        when: '內容準備中，稍後補上。',
-        start: '',
+        when: '',
+        start: '目標庫位右鄰車車頭到右後車窗角落',
         refs: [],
-        steps: [],
+        steps: [
+          {
+            move: 'fwd',
+            note: '順著車格往前開'
+          },
+          {
+            judge: '右後車窗角落　⟷　右鄰車車頭',
+            turn: 'R',
+            amount: '滿',
+            move: 'rev',
+            note: '看右側後視鏡，繞過右鄰車左前角'
+          },
+          {
+            judge: '車身　⟷　車位線平行',
+            action: '方向盤回正',
+            move: 'rev'
+          }
+        ],
         rescue: PARK_RESCUE,
         limits: PARK_LIMITS
       }
