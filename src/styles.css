@@ -366,20 +366,6 @@ button:focus-visible {
   color: var(--muted);
 }
 
-.look-label {
-  display: inline-block;
-  margin-right: 8px;
-  padding: 2px 8px;
-  border-radius: 6px;
-  background: var(--surface2);
-  border: 1px solid var(--line);
-  color: var(--text);
-  font-size: 11.5px;
-  font-weight: 800;
-  letter-spacing: 0.06em;
-  vertical-align: 2px;
-}
-
 .cue {
   display: inline-block;
   margin: 24px 0 0;
@@ -606,13 +592,6 @@ button:focus-visible {
   font-size: 15.5px;
   font-weight: 600;
   line-height: 1.55;
-}
-
-.ol-look {
-  margin: 7px 0 0 26px;
-  font-size: 13.5px;
-  line-height: 1.65;
-  color: var(--muted);
 }
 
 /* 有圖的步驟：左文字、右圖 */

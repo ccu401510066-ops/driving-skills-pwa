@@ -251,10 +251,6 @@ function Sheet({
                       <span className="ol-no">{String(i + 1).padStart(2, '0')}</span>
                       <span className="ol-action">{s.action}</span>
                     </div>
-                    <p className="ol-look">
-                      <span className="look-label">看</span>
-                      {s.look}
-                    </p>
                     <span className="cue small">{s.cue}</span>
                   </div>
                   {s.image && (
