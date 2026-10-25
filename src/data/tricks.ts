@@ -240,7 +240,8 @@ export const tricks: Trick[] = [
           {
             action: '順著前車平行往前開，直到車尾對齊前車車尾',
             look: '車尾　vs　前車車尾',
-            cue: '尾對尾'
+            cue: '尾對尾',
+            image: './diagrams/full-step1.jpg'
           },
           {
             action: '方向盤右打一圈，開始倒車',
@@ -250,7 +251,8 @@ export const tricks: Trick[] = [
           {
             action: '右後視鏡看到右前門把手與路邊重合',
             look: '右後視鏡：門把手　vs　路邊',
-            cue: '把手壓路邊'
+            cue: '把手壓路邊',
+            image: './diagrams/half-step3.jpg'
           },
           {
             action: '方向盤左打滿，繼續倒車',
