@@ -198,7 +198,6 @@ function Sheet({
   theme: 'dark' | 'light'
   onToggle: () => void
 }) {
-  const refs = variant?.refs ?? trick.refs
   const steps = variant?.steps ?? trick.steps
   const overview = variant?.overview
   const backTarget = side
@@ -268,20 +267,6 @@ function Sheet({
                 )
               })}
             </ol>
-          </section>
-        )}
-
-        {refs.length > 0 && (
-          <section className="block">
-            <h3>參照點</h3>
-            <dl className="refs">
-              {refs.map((r) => (
-                <div className="ref-row" key={r.k}>
-                  <dt>{r.k}</dt>
-                  <dd>{r.v}</dd>
-                </div>
-              ))}
-            </dl>
           </section>
         )}
 
