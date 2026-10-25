@@ -12,8 +12,10 @@ export type Step = {
   amount?: string
   /** 車輛行進方向 */
   move?: 'fwd' | 'rev'
-  /** 其餘動作描述 */
+  /** 方向盤／停車動作，排在行進方向前面 */
   action?: string
+  /** 行進中的補充說明，排在行進方向後面 */
+  note?: string
   /** 這一步的圖，顯示在文字右側 */
   image?: string
 }
@@ -79,7 +81,7 @@ export const tricks: Trick[] = [
       {
         judge: '停止線／路緣石／前車輪胎接地點',
         move: 'fwd',
-        action: '盯住它，別盯車頭'
+        note: '盯住它，別盯車頭'
       },
       {
         judge: '參照點消失　⟷　車頭下緣',
@@ -120,12 +122,12 @@ export const tricks: Trick[] = [
       {
         judge: '車身　⟷　旁車平行，距 50–80 cm',
         move: 'fwd',
-        action: '開過車位'
+        note: '開過車位'
       },
       {
         judge: '後照鏡下緣　⟷　車位前緣線',
         move: 'rev',
-        action: '對到就停'
+        note: '對到就停'
       },
       {
         judge: '右後輪　⟷　車位右線',
@@ -189,7 +191,7 @@ export const tricks: Trick[] = [
         steps: [
           {
             move: 'fwd',
-            action: '順著前車平行開'
+            note: '順著前車平行開'
           },
           {
             judge: '右側 B 柱　⟷　前車車頭',
@@ -233,7 +235,7 @@ export const tricks: Trick[] = [
         steps: [
           {
             move: 'fwd',
-            action: '順著前車平行開'
+            note: '順著前車平行開'
           },
           {
             judge: '車尾　⟷　前車車尾',
@@ -277,7 +279,7 @@ export const tricks: Trick[] = [
         steps: [
           {
             move: 'fwd',
-            action: '順著前車平行開'
+            note: '順著前車平行開'
           },
           {
             judge: '車尾　⟷　前車車尾',
@@ -328,14 +330,14 @@ export const tricks: Trick[] = [
         steps: [
           {
             move: 'fwd',
-            action: '順著後車平行開'
+            note: '順著後車平行開'
           },
           {
             judge: '右側 B 柱　⟷　後車車頭',
             turn: 'R',
             amount: '滿',
             move: 'fwd',
-            action: '駛入車格',
+            note: '駛入車格',
             image: './diagrams/nose-step1.jpg'
           },
           {
@@ -343,7 +345,7 @@ export const tricks: Trick[] = [
             turn: 'L',
             amount: '滿',
             move: 'fwd',
-            action: '駛出車格',
+            note: '駛出車格',
             image: './diagrams/nose-step3.jpg'
           },
           {

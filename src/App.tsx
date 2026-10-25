@@ -10,12 +10,13 @@ function variantOf(trick: Trick | undefined, vid?: string): Variant | undefined 
   return trick?.variants?.find((v) => v.id === vid)
 }
 
-/** 動作列：方向盤 → 行進方向 → 動作文字 */
+/** 動作列：方向盤 → 動作 → 行進方向 → 行進補充 */
 function stepAction(s: Step): string {
   const parts: string[] = []
   if (s.turn) parts.push(`${s.turn === 'R' ? '↻ 右打' : '↺ 左打'}${s.amount ?? ''}`)
-  if (s.move) parts.push(s.move === 'fwd' ? '↑ 前進' : '↓ 倒車')
   if (s.action) parts.push(s.action)
+  if (s.move) parts.push(s.move === 'fwd' ? '↑ 前進' : '↓ 倒車')
+  if (s.note) parts.push(s.note)
   return parts.join('　')
 }
 
