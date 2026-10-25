@@ -287,10 +287,15 @@ export const tricks: Trick[] = [
         ],
         steps: [
           {
-            action: '車尾對齊前車車尾，方向盤右打滿，開始倒車',
-            look: '左後視鏡先確認沒有來車',
-            cue: '尾對尾、右到底',
+            action: '順著前車平行往前開，直到車尾對齊前車車尾',
+            look: '車尾　vs　前車車尾',
+            cue: '尾對尾',
             image: './diagrams/full-step1.jpg'
+          },
+          {
+            action: '方向盤右打滿，開始倒車',
+            look: '左後視鏡先確認沒有來車',
+            cue: '右打滿'
           },
           {
             action: '轉到左後視鏡看到車格後車完整車頭',
