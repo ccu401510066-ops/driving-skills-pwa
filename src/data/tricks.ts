@@ -229,6 +229,7 @@ export const tricks: Trick[] = [
         sway: '車頭左側外擺幅度：中',
         when: '標準情況。車位長度一般、前後車距離正常。',
         start: '車尾對齊前車車尾',
+        overview: './diagrams/full-overview.png',
         refs: [
           { k: '起點', v: '車尾對齊前車車尾（車身與前車平行）' },
           { k: '回打點', v: '右後視鏡：右前門把手與路邊重合' },
