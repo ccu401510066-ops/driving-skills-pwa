@@ -249,20 +249,22 @@ export const tricks: Trick[] = [
             judge: '左側後視鏡　⟷　左鄰車完整車頭',
             turn: 'L',
             amount: '滿',
-            move: 'rev'
+            move: 'rev',
+            sub: '（看左側後視鏡，繞過左鄰車右前角）',
+            image: './diagrams/revleft-square-step2.jpg'
           },
           {
             judge: '左側後視鏡　⟷　與左鄰車距離由窄變寬',
             turn: 'R',
             amount: '滿',
-            move: 'fwd',
-            note: '繞過左鄰車右前角，往前調整一把'
+            move: 'fwd'
           },
           {
             judge: '左側後視鏡　⟷　車身與左鄰車距離收攏',
             turn: 'L',
             amount: '滿',
-            move: 'rev'
+            move: 'rev',
+            sub: '（看左側後視鏡，繞過左鄰車右前角）'
           },
           {
             judge: '車身　⟷　車位線平行',
