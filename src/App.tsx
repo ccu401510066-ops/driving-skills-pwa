@@ -111,8 +111,8 @@ function Pick({
   const grouped = twoLevels(trick)
   const side = sideId ? all.find((s) => s.id === sideId) : undefined
   const items = grouped ? (side?.variants ?? []) : all
-  /** 只有兩個選項（例如左側／右側庫位）就左右並排，卡片也不放起點那行 */
-  const twoCol = !side && items.length === 2
+  /** 只有兩個選項（例如左側／右側庫位）：上下排、字放大、卡片不放起點那行 */
+  const bigPick = !side && items.length === 2
   const compare = grouped ? side?.compare : trick.compare
   const listTitle = side ? '選一種打法' : (trick.pickTitle ?? '選一種打法')
   const backTarget = grouped && side ? `#/pick/${trick.id}` : '#/'
@@ -140,24 +140,37 @@ function Pick({
 
         <section className="block">
           <h3>{listTitle}</h3>
-          <div className={twoCol ? 'variant-list two-col' : 'variant-list'}>
+          <div className={bigPick ? 'variant-list big' : 'variant-list'}>
             {items.map((v, i) => (
               <button
-                className="variant-card"
+                className={bigPick ? 'variant-card big' : 'variant-card'}
                 key={v.id}
                 onClick={() =>
                   go(grouped && !side ? `#/pick/${trick.id}/${v.id}` : methodPath(trick, side, v))
                 }
               >
-                <span className="variant-top">
-                  <span className="variant-no">{String(i + 1).padStart(2, '0')}</span>
-                  <span className="variant-name">{v.name}</span>
-                  {v.sway && <span className="variant-sway">{v.sway}</span>}
-                </span>
-                {v.when && <span className="variant-when">{v.when}</span>}
-                {v.start && !twoCol && <span className="variant-start">起點：{v.start}</span>}
-                {grouped && !side && (
-                  <span className="variant-start more">{(v.variants ?? []).length} 種打法 ›</span>
+                {bigPick ? (
+                  <>
+                    <span className="variant-name">{v.name}</span>
+                    <span className="chev" aria-hidden="true">
+                      ›
+                    </span>
+                  </>
+                ) : (
+                  <>
+                    <span className="variant-top">
+                      <span className="variant-no">{String(i + 1).padStart(2, '0')}</span>
+                      <span className="variant-name">{v.name}</span>
+                      {v.sway && <span className="variant-sway">{v.sway}</span>}
+                    </span>
+                    {v.when && <span className="variant-when">{v.when}</span>}
+                    {v.start && <span className="variant-start">起點：{v.start}</span>}
+                    {grouped && !side && (
+                      <span className="variant-start more">
+                        {(v.variants ?? []).length} 種打法 ›
+                      </span>
+                    )}
+                  </>
                 )}
               </button>
             ))}
