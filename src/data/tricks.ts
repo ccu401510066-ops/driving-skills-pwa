@@ -16,6 +16,8 @@ export type Step = {
   action?: string
   /** 行進中的補充說明，排在行進方向後面 */
   note?: string
+  /** 動作的第二行（另起一行顯示，通常用括號寫補充） */
+  sub?: string
   /** 這一步的圖，顯示在文字右側 */
   image?: string
 }
@@ -288,7 +290,8 @@ export const tricks: Trick[] = [
             turn: 'R',
             amount: '滿',
             move: 'rev',
-            note: '看右側後視鏡，繞過右鄰車左前角'
+            sub: '（看右側後視鏡，繞過右鄰車左前角）',
+            image: './diagrams/revright-square-step2.jpg'
           },
           {
             judge: '車身　⟷　車位線平行',

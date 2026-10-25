@@ -271,9 +271,10 @@ function Sheet({
                     <span className="ol-no">{String(i + 1).padStart(2, '0')}</span>
                     {s.judge && <p className="judge">{s.judge}</p>}
                     <div className="step-row">
-                      {act && (
+                      {(act || s.sub) && (
                         <div className="do">
-                          <p className="do-text">{act}</p>
+                          {act && <p className="do-text">{act}</p>}
+                          {s.sub && <p className="do-sub">{s.sub}</p>}
                         </div>
                       )}
                       {s.image && (
