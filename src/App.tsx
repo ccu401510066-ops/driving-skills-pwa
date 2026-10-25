@@ -140,7 +140,7 @@ function Pick({
 
         <section className="block">
           <h3>{listTitle}</h3>
-          <div className={bigPick ? 'variant-list big' : 'variant-list'}>
+          <div className={bigPick ? 'variant-list two-col' : 'variant-list'}>
             {items.map((v, i) => (
               <button
                 className={bigPick ? 'variant-card big' : 'variant-card'}
@@ -151,10 +151,8 @@ function Pick({
               >
                 {bigPick ? (
                   <>
-                    <span className="variant-name">{v.name}</span>
-                    <span className="chev" aria-hidden="true">
-                      ›
-                    </span>
+                    <span className="variant-no">{String(i + 1).padStart(2, '0')}</span>
+                    <span className="variant-name vertical">{v.name}</span>
                   </>
                 ) : (
                   <>
