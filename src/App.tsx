@@ -177,7 +177,6 @@ function Pick({
                         {v.sway && <span className="variant-sway">{v.sway}</span>}
                       </span>
                       {v.when && <span className="variant-when">{v.when}</span>}
-                      {v.start && <span className="variant-start">起點：{v.start}</span>}
                       {grouped && !side && isGroup(v) && (
                         <span className="variant-start more">›</span>
                       )}

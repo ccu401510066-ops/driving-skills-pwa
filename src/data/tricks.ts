@@ -161,7 +161,7 @@ export const tricks: Trick[] = [
             id: 'slant',
             name: '打斜入庫',
             sway: '',
-            when: '',
+            when: '一般情況適用',
             start: '左後視鏡對齊庫位中間～左鄰車中間（愈前面擺幅愈小）',
             refs: [
               { k: '起點', v: '左後視鏡對齊庫位中間～左鄰車中間（愈前面擺幅愈小），車身與車格平行' },
@@ -200,7 +200,7 @@ export const tricks: Trick[] = [
             id: 'square',
             name: '直角入庫',
             sway: '',
-            when: '',
+            when: '路幅有限適用',
             start: '左後視鏡看到目標庫位左鄰車完整車頭',
             refs: [],
             steps: [
@@ -251,7 +251,7 @@ export const tricks: Trick[] = [
             id: 'slant',
             name: '打斜入庫',
             sway: '',
-            when: '',
+            when: '一般情況適用',
             start: '右後視鏡對齊右庫線～右鄰車中間（愈前面擺幅愈小）',
             refs: [
               { k: '起點', v: '右後視鏡對齊右庫線～右鄰車中間（愈前面擺幅愈小），車身與車格平行' },
@@ -275,7 +275,7 @@ export const tricks: Trick[] = [
                 turn: 'R',
                 amount: '滿',
                 move: 'rev',
-                note: '繞過右鄰車左前角',
+                sub: '（看右側後視鏡，繞過右鄰車左前角）',
                 image: './diagrams/revright-step3.jpg'
               },
               {
@@ -291,7 +291,7 @@ export const tricks: Trick[] = [
             id: 'square',
             name: '直角入庫',
             sway: '',
-            when: '',
+            when: '路幅有限適用',
             start: '目標庫位右鄰車車頭到右後車窗角落',
             refs: [],
             steps: [
@@ -343,7 +343,7 @@ export const tricks: Trick[] = [
         id: 'rear',
         name: '車尾先進',
         sway: '',
-        when: '',
+        when: '一般情況適用',
         pickTitle: '選一種打法',
         variants: [
           {
@@ -490,7 +490,7 @@ export const tricks: Trick[] = [
         id: 'nose',
         name: '車頭先進',
         sway: '防止被搶車位',
-        when: '後面有車在等、怕被搶位；或車位前後空間不足以倒車進去。',
+        when: '',
         start: '右側 B 柱對齊後車車頭',
         refs: [
           { k: '起點', v: '右側 B 柱對齊車格後車車頭' },
