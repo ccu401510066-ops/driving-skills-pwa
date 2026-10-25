@@ -588,11 +588,13 @@ button:focus-visible {
   font-weight: 600;
   line-height: 1.55;
   color: var(--text);
+  line-break: strict;
 }
 
 /* 動作：琥珀豎條 */
 .do {
-  margin-top: 9px;
+  flex: 1;
+  min-width: 0;
   padding: 1px 0 1px 12px;
   border-left: 3px solid var(--accent);
 }
@@ -605,17 +607,13 @@ button:focus-visible {
   letter-spacing: -0.005em;
 }
 
-/* 有圖的步驟：左文字、右圖 */
+/* 有圖的步驟：判斷整行滿寬，動作與圖並排 */
 
-.steps li.has-img {
+.step-row {
   display: flex;
   align-items: flex-start;
   gap: 12px;
-}
-
-.step-main {
-  flex: 1;
-  min-width: 0;
+  margin-top: 9px;
 }
 
 .step-img {

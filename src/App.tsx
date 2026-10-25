@@ -262,20 +262,20 @@ function Sheet({
                 const act = stepAction(s)
                 return (
                   <li key={i} className={s.image ? 'has-img' : undefined}>
-                    <div className="step-main">
-                      <span className="ol-no">{String(i + 1).padStart(2, '0')}</span>
-                      {s.judge && <p className="judge">{s.judge}</p>}
+                    <span className="ol-no">{String(i + 1).padStart(2, '0')}</span>
+                    {s.judge && <p className="judge">{s.judge}</p>}
+                    <div className="step-row">
                       {act && (
                         <div className="do">
                           <p className="do-text">{act}</p>
                         </div>
                       )}
+                      {s.image && (
+                        <figure className="step-img">
+                          <img src={s.image} alt={`步驟 ${i + 1} 示意圖`} loading="lazy" />
+                        </figure>
+                      )}
                     </div>
-                    {s.image && (
-                      <figure className="step-img">
-                        <img src={s.image} alt={`步驟 ${i + 1} 示意圖`} loading="lazy" />
-                      </figure>
-                    )}
                   </li>
                 )
               })}
