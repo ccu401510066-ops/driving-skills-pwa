@@ -180,8 +180,6 @@ export const tricks: Trick[] = [
         sway: '車頭左側外擺幅度：小',
         when: '最常用。旁邊有車、有牆，不想讓車頭擺出去太多。',
         start: '右側 B 柱對齊前車車頭',
-        overview: './diagrams/half-overview.png',
-        overviewNote: '由左至右：① 起點對位　② 右打半圈倒車　③ 車身進格',
         refs: [
           { k: '起點', v: '右側 B 柱對齊前車車頭（車身與前車平行）' },
           { k: '回打點', v: '右後視鏡：右前門把手與路邊重合' },
@@ -229,7 +227,6 @@ export const tricks: Trick[] = [
         sway: '車頭左側外擺幅度：中',
         when: '標準情況。車位長度一般、前後車距離正常。',
         start: '車尾對齊前車車尾',
-        overview: './diagrams/full-overview.png',
         refs: [
           { k: '起點', v: '車尾對齊前車車尾（車身與前車平行）' },
           { k: '回打點', v: '右後視鏡：右前門把手與路邊重合' },
