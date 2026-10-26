@@ -825,6 +825,24 @@ button:focus-visible {
   color: var(--muted);
 }
 
+/* 判讀基準：說明文字＋對照表 */
+.facts-line {
+  margin: 0 0 10px;
+  font-size: 13.5px;
+  line-height: 1.85;
+  line-break: strict;
+}
+.facts-line + .compare,
+.facts-line + .facts-table {
+  margin-top: 12px;
+}
+.facts-table .compare-row {
+  grid-template-columns: 0.8fr 1.35fr 1.35fr;
+}
+.facts-table .compare-row span:nth-child(2) {
+  color: inherit;
+}
+
 @media (prefers-reduced-motion: reduce) {
   * {
     animation: none !important;

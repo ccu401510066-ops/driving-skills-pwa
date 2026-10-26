@@ -224,6 +224,7 @@ function Sheet({
   onToggle: () => void
 }) {
   const steps = variant?.steps ?? trick.steps
+  const facts = trick.facts
   const overview = variant?.overview
   const mantra = variant ? (side ? variant.name : (variant.sway || trick.oneLiner)) : trick.oneLiner
   const situation = variant ? variant.when : trick.situation
@@ -291,6 +292,31 @@ function Sheet({
                 )
               })}
             </ol>
+          </section>
+        )}
+
+        {facts && (
+          <section className="block">
+            <h3>{facts.title}</h3>
+            {facts.intro.map((line) => (
+              <p className="facts-line" key={line}>
+                {line}
+              </p>
+            ))}
+            <div className="compare facts-table">
+              <div className="compare-row compare-head">
+                {facts.head.map((h) => (
+                  <span key={h}>{h}</span>
+                ))}
+              </div>
+              {facts.rows.map((row) => (
+                <div className="compare-row" key={row[0]}>
+                  {row.map((cell, i) => (
+                    <span key={i}>{cell}</span>
+                  ))}
+                </div>
+              ))}
+            </div>
           </section>
         )}
 

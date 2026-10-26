@@ -28,6 +28,14 @@ export type Compare = {
   note?: string
 }
 
+/** 內容頁下方的對照表（例：車前距離判讀基準） */
+export type Facts = {
+  title: string
+  intro: string[]
+  head: string[]
+  rows: string[][]
+}
+
 export type Variant = {
   id: string
   name: string
@@ -70,6 +78,8 @@ export type Trick = {
   limits: string[]
   /** 打法比較表 */
   compare?: Compare
+  /** 內容頁下方的判讀對照表 */
+  facts?: Facts
   /** 選打法那一頁的標題，沒給就用預設 */
   pickTitle?: string
   /** 選打法那一頁用並排的大按鈕（名稱直書） */
@@ -135,7 +145,20 @@ export const tricks: Trick[] = [
       '參照距離依車型、座椅高度、駕駛身高而不同，換車請在空地重新校準一次。',
       '這是小型車的視線；貨車、公車的盲區完全不同，不能套用。',
       '倒車顯影與倒車雷達是輔助，不是判準。'
-    ]
+    ],
+    facts: {
+      title: '判讀基準',
+      intro: [
+        '以車寬 1.9 公尺的車輛來說，車前安全距離的判讀基準為：左 A 柱約 60 公分、右 A 柱約 90 公分。只要在駕駛座上觀察，引擎蓋邊緣尚未蓋過前方障礙物的對應點位，轉彎時基本上都能安全通過。',
+        '若以一般轎車作為前方障礙物，可參考以下視覺點位對照：'
+      ],
+      head: ['障礙物', '≈ 60 公分', '≈ 90 公分'],
+      rows: [
+        ['車尾', '保險桿下緣', '大燈中緣'],
+        ['車側', '車輪頂端（車輪高）', '車門把手'],
+        ['車頭', '車牌位置', '頭燈位置']
+      ]
+    }
   },
   {
     id: 'reverse-parking',
